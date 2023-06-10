@@ -16,19 +16,19 @@ namespace YAGO.WebProjectTemplate.Web
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
+		// Этот метод вызывается средой выполнения. Используйте этот метод для добавления служб в контейнер.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
 
-			// In production, the React files will be served from this directory
+			// В подакшене (production) файлы React будут обслуживаться из этого каталога.
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/build";
 			});
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		// Этот метод вызывается средой выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			ExceptionHandling(app, env);
@@ -51,22 +51,18 @@ namespace YAGO.WebProjectTemplate.Web
 				spa.Options.SourcePath = "ClientApp";
 
 				if (env.IsDevelopment())
-				{
 					spa.UseReactDevelopmentServer(npmScript: "start");
-				}
 			});
 		}
 
 		private static void ExceptionHandling(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
-			{
 				app.UseDeveloperExceptionPage();
-			}
 			else
 			{
 				app.UseExceptionHandler("/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+				// Значение HSTS по умолчанию — 30 дней. Вы можете изменить это для рабочих сценариев, см. https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
 		}
