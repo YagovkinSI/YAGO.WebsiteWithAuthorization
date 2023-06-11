@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
 import { ApplicationState } from '../store';
 import * as CounterStore from '../store/Counter';
 
 type CounterProps =
     CounterStore.CounterState &
-    typeof CounterStore.actionCreators &
-    RouteComponentProps<{}>;
+    typeof CounterStore.actionCreators;
 
 class Counter extends React.PureComponent<CounterProps> {
     public render() {
