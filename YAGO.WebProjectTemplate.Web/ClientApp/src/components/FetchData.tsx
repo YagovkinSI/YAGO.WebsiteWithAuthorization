@@ -46,10 +46,10 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
           <tr>
-            <th>Дата</th>
-            <th>Темп. (C)</th>
-            <th>Темп. (F)</th>
-            <th>Погода</th>
+            <th style={{ width: '25%' }}>Дата</th>
+            <th style={{ width: '22%' }}>℃</th>
+            <th style={{ width: '22%' }}>℉</th>
+            <th style={{ width: '31%' }}>Погода</th>
           </tr>
         </thead>
         <tbody>
