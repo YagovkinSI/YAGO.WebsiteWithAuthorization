@@ -53,7 +53,7 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
         <tbody>
           {this.props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) =>
             <tr key={forecast.date}>
-              <td>{forecast.date}</td>
+              <td>{new Date(Date.parse(forecast.date)).toLocaleDateString()}</td>
               <td>{forecast.temperatureC}</td>
               <td>{forecast.temperatureF}</td>
               <td>{forecast.summary}</td>
