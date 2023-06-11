@@ -13,19 +13,13 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
                     <Container>
-                        <NavbarBrand tag={Link} to="/">YAGO.WebProjectTemplate.Web</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} className="mr-2"/>
+                        <NavbarBrand tag={Link} to="/">YAGO Web Project Template</NavbarBrand>
+                        <NavbarToggler onClick={this.toggle} className="mr-2" />
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
                             <ul className="navbar-nav flex-grow">
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                                </NavItem>
+                                {this.renderNavLink('/', 'Home')}
+                                {this.renderNavLink('/counter', 'Counter')}
+                                {this.renderNavLink('/fetch-data', 'Fetch data')}
                             </ul>
                         </Collapse>
                     </Container>
@@ -38,5 +32,19 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
         this.setState({
             isOpen: !this.state.isOpen
         });
+    }
+
+    private renderNavLink(path: string, name: string) {
+        return (
+            <NavItem>
+                <NavLink
+                    tag={Link}
+                    className="text-dark"
+                    to={path}
+                    onClick={() => { this.setState({ isOpen: false }) }}>
+                    {name}
+                </NavLink>
+            </NavItem>
+        )
     }
 }
