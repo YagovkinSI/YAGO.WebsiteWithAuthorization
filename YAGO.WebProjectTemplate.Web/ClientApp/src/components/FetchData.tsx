@@ -6,6 +6,13 @@ import * as WeatherForecastsStore from '../store/WeatherForecasts';
 import { Box, Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
+// Во время выполнения Redux объединит...
+type WeatherForecastProps =
+  // ... состояние (state), которое мы запросили из хранилища (store) Redux,
+  WeatherForecastsStore.WeatherForecastsState
+  // ...плюс создатели действий (action creators), которых мы запросили
+  & typeof WeatherForecastsStore.actionCreators;
+
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     fontWeight: 'bold'
@@ -17,13 +24,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover
   },
 }));
-
-// Во время выполнения Redux объединит...
-type WeatherForecastProps =
-  // ... состояние (state), которое мы запросили из хранилища (store) Redux,
-  WeatherForecastsStore.WeatherForecastsState
-  // ...плюс создатели действий (action creators), которых мы запросили
-  & typeof WeatherForecastsStore.actionCreators;
 
 const FetchData: React.FC<WeatherForecastProps> = (props) => {
   const navigate = useNavigate();
@@ -39,33 +39,41 @@ const FetchData: React.FC<WeatherForecastProps> = (props) => {
     props.requestWeatherForecasts(startDateIndexNum);
   });
 
+  const renderTableHead = () => {
+    return <TableHead>
+      <TableRow>
+        <StyledTableCell sx={{ width: { xs: '34%', sm: '25%' } }}>Дата</StyledTableCell>
+        <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℃</StyledTableCell>
+        <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℉</StyledTableCell>
+        <StyledTableCell sx={{ width: { xs: '30%', sm: '25%' } }}>Погода</StyledTableCell>
+      </TableRow>
+    </TableHead>
+  }
+
+  const renderTableBody = () => {
+    return <TableBody>
+      {props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) => (
+        <StyledTableRow
+          key={forecast.date}
+          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+          <StyledTableCell component="th" scope="row">
+            {new Date(Date.parse(forecast.date)).toLocaleDateString()}
+          </StyledTableCell>
+          <StyledTableCell>{forecast.temperatureC}</StyledTableCell>
+          <StyledTableCell>{forecast.temperatureF}</StyledTableCell>
+          <StyledTableCell>{forecast.summary}</StyledTableCell>
+        </StyledTableRow >
+      ))}
+    </TableBody>
+  }
+
   const renderForecastsTable = () => {
     return (
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell sx={{ width: { xs: '34%', sm: '25%' } }}>Дата</StyledTableCell>
-              <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℃</StyledTableCell>
-              <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℉</StyledTableCell>
-              <StyledTableCell sx={{ width: { xs: '30%', sm: '25%' } }}>Погода</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) => (
-              <StyledTableRow
-                key={forecast.date}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <StyledTableCell component="th" scope="row">
-                  {new Date(Date.parse(forecast.date)).toLocaleDateString()}
-                </StyledTableCell>
-                <StyledTableCell>{forecast.temperatureC}</StyledTableCell>
-                <StyledTableCell>{forecast.temperatureF}</StyledTableCell>
-                <StyledTableCell>{forecast.summary}</StyledTableCell>
-              </StyledTableRow >
-            ))}
-          </TableBody>
+          {renderTableHead()}
+          {renderTableBody()}
         </Table>
       </TableContainer>
     );
@@ -74,7 +82,6 @@ const FetchData: React.FC<WeatherForecastProps> = (props) => {
   const renderPagination = () => {
     const prevStartDateIndex = (props.startDateIndex || 0) - 5;
     const nextStartDateIndex = (props.startDateIndex || 0) + 5;
-
     return (
       <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
         <Button variant='outlined' onClick={() => navigate(`/fetch-data/${prevStartDateIndex}`)}>Назад</Button>
