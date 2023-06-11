@@ -1,18 +1,20 @@
-// In production, we register a service worker to serve assets from local cache.
+// В продакшене (production) мы регистрируем сервис-воркера (service worker) 
+// для обслуживания ассетов (assets) из локального кеша (local cache)
 
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on the "N+1" visit to a page, since previously
-// cached resources are updated in the background.
+// Это позволяет приложению загружаться быстрее при последующих посещениях 
+// в продакшене (production) и дает ему возможность работать в автономном (offline) 
+// режиме. Однако это также означает, что разработчики (и пользователи) будут видеть 
+// развернутые обновления только при посещении страницы "N+1", поскольку ранее 
+// кэшированные ресурсы обновляются в фоновом режиме.
 
-// To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
-// This link also includes instructions on opting out of this behavior.
+// Чтобы узнать больше о преимуществах этой модели, прочитайте https://goo.gl/KwvDNy.
+// Эта ссылка также содержит инструкции по отказу от такого поведения.
 
 const isLocalhost = Boolean(
     window.location.hostname === 'localhost' ||
-    // [::1] is the IPv6 localhost address.
+    // [::1] это адрес локального хоста IPv6.
     window.location.hostname === '[::1]' ||
-    // 127.0.0.1/8 is considered localhost for IPv4.
+    // 127.0.0.1/8 считается локальным хостом для IPv4.
     window.location.hostname.match(
         /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
     )
@@ -20,13 +22,14 @@ const isLocalhost = Boolean(
 
 export default function register() {
     if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-        // The URL constructor is available in all browsers that support SW.
+        // Конструктор URL доступен во всех браузерах, поддерживающих SW.
         const url = process.env.PUBLIC_URL as string;
         const publicUrl = new URL(url, window.location.toString());
         if (publicUrl.origin !== window.location.origin) {
-            // Our service worker won't work if PUBLIC_URL is on a different origin
-            // from what our page is served on. This might happen if a CDN is used to
-            // serve assets; see https://github.com/facebookincubator/create-react-app/issues/2374
+            // Наш сервис-воркер (service worker) не будет работать, если PUBLIC_URL 
+            // находится в другом источнике, отличном от того, на котором обслуживается 
+            // наша страница. Это может произойти, если CDN используется для обслуживания 
+            // ассетов (assets); см. https://github.com/facebookincubator/create-react-app/issues/2374 
             return;
         }
 
@@ -34,10 +37,10 @@ export default function register() {
             const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
             if (isLocalhost) {
-                // This is running on localhost. Lets check if a service worker still exists or not.
+                // При работе на локальном хосте проверяет, существует сервис-воркер (service worker) или нет.
                 checkValidServiceWorker(swUrl);
             } else {
-                // Is not local host. Just register service worker
+                // При работе на не локальном хосте просто регистриует сервис-воркер (service worker)
                 registerValidSW(swUrl);
             }
         });
@@ -53,46 +56,46 @@ function registerValidSW(swUrl: string) {
                 installingWorker.onstatechange = () => {
                     if (installingWorker.state === 'installed') {
                         if (navigator.serviceWorker.controller) {
-                            // At this point, the old content will have been purged and
-                            // the fresh content will have been added to the cache.
-                            // It's the perfect time to display a "New content is
-                            // available; please refresh." message in your web app.
-                            console.log('New content is available; please refresh.');
+                            // На этом этапе старый контент будет удален, а новый контент 
+                            // будет добавлен в кеш. Это идеальное время, чтобы отобразить 
+                            // сообщение "Новый контент доступен. Пожалуйста, обновите страницу"
+                            // в вашем веб-приложении.
+                            console.log('Новый контент доступен. Пожалуйста, обновите страницу.');
                         } else {
-                            // At this point, everything has been precached.
-                            // It's the perfect time to display a
-                            // "Content is cached for offline use." message.
-                            console.log('Content is cached for offline use.');
+                            // На этом этапе все предварительно кэшировано. Это идеальное время, 
+                            // чтобы отобразить сообщение «Контент кэширован для автономного 
+                            // (offline) использования».
+                            console.log('Контент кэширован для offline использования.');
                         }
                     }
                 };
             };
         })
         .catch(error => {
-            console.error('Error during service worker registration:', error);
+            console.error('Ошибка при регистрации "service worker"):', error);
         });
 }
 
 function checkValidServiceWorker(swUrl: string) {
-    // Check if the service worker can be found. If it can't reload the page.
+    // Проверяет, можно ли найти сервис-воркера (service worker). Если не удается - перезагружает страницу
     fetch(swUrl)
         .then(response => {
-            // Ensure service worker exists, and that we really are getting a JS file.
+            // Убеждается, что сервис-воркер (service worker) существует и что мы действительно получаем JS-файл.
             const contentType = response.headers.get('content-type');
             if (response.status === 404 || (contentType && contentType.indexOf('javascript') === -1)) {
-                // No service worker found. Probably a different app. Reload the page.
+                // Cервис-воркер (service worker) не найден. Наверное другое приложение. Перезагружает страницу.
                 navigator.serviceWorker.ready.then(registration => {
                     registration.unregister().then(() => {
                         window.location.reload();
                     });
                 });
             } else {
-                // Service worker found. Proceed as normal.
+                // Cервис-воркер (service worker) найден. Штатно продолжает работу
                 registerValidSW(swUrl);
             }
         })
         .catch(() => {
-            console.log('No internet connection found. App is running in offline mode.');
+            console.log('Интернет-соединение не найдено. Приложение работает в offline режиме.');
         });
 }
 

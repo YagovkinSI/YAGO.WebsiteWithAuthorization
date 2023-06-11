@@ -13,16 +13,16 @@ class Counter extends React.PureComponent<CounterProps> {
     public render() {
         return (
             <React.Fragment>
-                <h1>Counter</h1>
+                <h1>Счетчик</h1>
 
-                <p>This is a simple example of a React component.</p>
+                <p>Это простой пример компонента React.</p>
 
-                <p aria-live="polite">Current count: <strong>{this.props.count}</strong></p>
+                <p aria-live="polite">Текущее значение: <strong>{this.props.count}</strong></p>
 
                 <button type="button"
                     className="btn btn-outline-secondary btn-sm"
                     onClick={() => { this.props.increment(); }}>
-                    Increment
+                    Увеличить
                 </button>
             </React.Fragment>
         );

@@ -13,13 +13,13 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
             <header>
                 <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
                     <Container>
-                        <NavbarBrand tag={Link} to="/">YAGO Web Project Template</NavbarBrand>
+                        <NavbarBrand tag={Link} to="/">YAGO Шаблон веб-проекта</NavbarBrand>
                         <NavbarToggler onClick={this.toggle} className="mr-2" />
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
                             <ul className="navbar-nav flex-grow">
-                                {this.renderNavLink('/', 'Home')}
-                                {this.renderNavLink('/counter', 'Counter')}
-                                {this.renderNavLink('/fetch-data', 'Fetch data')}
+                                {this.renderNavLink('/', 'Главная')}
+                                {this.renderNavLink('/counter', 'Счетчик')}
+                                {this.renderNavLink('/fetch-data', 'Получение данных')}
                             </ul>
                         </Collapse>
                     </Container>

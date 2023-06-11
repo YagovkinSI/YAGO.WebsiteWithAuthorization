@@ -5,20 +5,22 @@ import { Link } from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as WeatherForecastsStore from '../store/WeatherForecasts';
 
-// At runtime, Redux will merge together...
+// Во время выполнения Redux объединит...
 type WeatherForecastProps =
-  WeatherForecastsStore.WeatherForecastsState // ... state we've requested from the Redux store
-  & typeof WeatherForecastsStore.actionCreators // ... plus action creators we've requested
-  & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
-
+  // ... состояние (state), которое мы запросили из хранилища (store) Redux,
+  WeatherForecastsStore.WeatherForecastsState
+  // ...плюс создатели действий (action creators), которых мы запросили
+  & typeof WeatherForecastsStore.actionCreators
+  // ...плюс входящие параметры маршрутизации (routing parameters)
+  & RouteComponentProps<{ startDateIndex: string }>;
 
 class FetchData extends React.PureComponent<WeatherForecastProps> {
-  // This method is called when the component is first added to the document
+  // Этот метод вызывается при первом добавлении компонента в документ
   public componentDidMount() {
     this.ensureDataFetched();
   }
 
-  // This method is called when the route parameters change
+  // Этот метод вызывается при изменении параметров маршрутизации (routing parameters)
   public componentDidUpdate() {
     this.ensureDataFetched();
   }
@@ -26,8 +28,8 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
   public render() {
     return (
       <React.Fragment>
-        <h1 id="tabelLabel">Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
+        <h1 id="tabelLabel">Прогноз погоды</h1>
+        <p>Этот компонент демонстрирует получение данных с сервера и работу с параметрами URL.</p>
         {this.renderForecastsTable()}
         {this.renderPagination()}
       </React.Fragment>
@@ -44,10 +46,10 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+            <th style={{ width: '25%' }}>Дата</th>
+            <th style={{ width: '22%' }}>℃</th>
+            <th style={{ width: '22%' }}>℉</th>
+            <th style={{ width: '31%' }}>Погода</th>
           </tr>
         </thead>
         <tbody>
@@ -70,15 +72,17 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
 
     return (
       <div className="d-flex justify-content-between">
-        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${prevStartDateIndex}`}>Previous</Link>
-        {this.props.isLoading && <span>Loading...</span>}
-        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${nextStartDateIndex}`}>Next</Link>
+        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${prevStartDateIndex}`}>Назад</Link>
+        {this.props.isLoading && <span>Загрузка...</span>}
+        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${nextStartDateIndex}`}>Далее</Link>
       </div>
     );
   }
 }
 
 export default connect(
-  (state: ApplicationState) => state.weatherForecasts, // Selects which state properties are merged into the component's props
-  WeatherForecastsStore.actionCreators // Selects which action creators are merged into the component's props
+  // Выбирает, какие свойства состояния (state properties) объединяются в свойства (props) компонента
+  (state: ApplicationState) => state.weatherForecasts,
+  // Выбирает, какие создатели действий (action creators) объединяются в свойства (props) компонента.
+  WeatherForecastsStore.actionCreators
 )(FetchData as any); // eslint-disable-line @typescript-eslint/no-explicit-any

@@ -1,22 +1,23 @@
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 
-// The top-level state object
+// Объект состояния (state) верхнего уровня
 export interface ApplicationState {
     counter: Counter.CounterState | undefined;
     weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
 }
 
-// Whenever an action is dispatched, Redux will update each top-level application state property using
-// the reducer with the matching name. It's important that the names match exactly, and that the reducer
-// acts on the corresponding ApplicationState property type.
+// Всякий раз, когда отправляется (dispatched) действие (action), Redux будет обновлять каждое 
+// свойство состояния приложения (application state property) верхнего уровня, используя 
+// редюсер (reducer) с соответствующим именем. Важно, чтобы имена точно совпадали, и чтобы 
+// reducer (reducer) работал с соответствующим типом свойства ApplicationState.
 export const reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer
 };
 
-// This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are
-// correctly typed to match your store.
+// Этот тип можно использовать в качестве подсказки для создателей действий (action creators), 
+// чтобы его параметры 'dispatch' and 'getState' имели правильные типы в соответствии с вашим хранилищем (store).
 export interface AppThunkAction<TAction> {
     (dispatch: (action: TAction) => void, getState: () => ApplicationState): void;
 }
