@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as WeatherForecastsStore from '../store/WeatherForecasts';
-import { Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material';
+import { Box, Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 const StyledTableCell = styled(TableCell)(() => ({
@@ -14,7 +14,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: theme.palette.action.hover
   },
 }));
 
@@ -45,10 +45,10 @@ const FetchData: React.FC<WeatherForecastProps> = (props) => {
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{ width: '25%' }}>Дата</StyledTableCell>
-              <StyledTableCell style={{ width: '22%' }}>℃</StyledTableCell>
-              <StyledTableCell style={{ width: '22%' }}>℉</StyledTableCell>
-              <StyledTableCell style={{ width: '31%' }}>Погода</StyledTableCell>
+              <StyledTableCell sx={{ width: { xs: '34%', sm: '25%' } }}>Дата</StyledTableCell>
+              <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℃</StyledTableCell>
+              <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℉</StyledTableCell>
+              <StyledTableCell sx={{ width: { xs: '30%', sm: '25%' } }}>Погода</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -76,11 +76,11 @@ const FetchData: React.FC<WeatherForecastProps> = (props) => {
     const nextStartDateIndex = (props.startDateIndex || 0) + 5;
 
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
         <Button variant='outlined' onClick={() => navigate(`/fetch-data/${prevStartDateIndex}`)}>Назад</Button>
         {props.isLoading && <span>Загрузка...</span>}
         <Button variant='outlined' onClick={() => navigate(`/fetch-data/${nextStartDateIndex}`)}>Далее</Button>
-      </div>
+      </Box>
     );
   }
 
