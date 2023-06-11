@@ -1,27 +1,28 @@
 import { Action, Reducer } from 'redux';
 
 // -----------------
-// STATE - This defines the type of data maintained in the Redux store.
+// Состояние (state) - определяет тип данных, хранящихся в хранилище (store) Redux.
 
 export interface CounterState {
     count: number;
 }
 
 // -----------------
-// ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
-// They do not themselves have any side-effects; they just describe something that is going to happen.
-// Use @typeName and isActionType for type detection that works even after serialization/deserialization.
+// Действия (actions) - Это сериализуемые (следовательно, воспроизводимые) описания переходов состояний.
+// Сами по себе они не имеют побочных эффектов; они просто описывают то, что должно произойти.
+// Используйте @typeName и isActionType для определения типа, которое работает даже после сериализации/десериализации.
 
 export interface IncrementCountAction { type: 'INCREMENT_COUNT' }
 export interface DecrementCountAction { type: 'DECREMENT_COUNT' }
 
-// Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
-// declared type strings (and not any other arbitrary string).
+// Объявите тип 'размеченный союз' ('discriminated union'). Это гарантирует, что все ссылки на свойства типа ('type') 
+// содержат одну из объявленных строк типа (а не любую другую произвольную строку).
 export type KnownAction = IncrementCountAction | DecrementCountAction;
 
 // ----------------
-// ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
-// They don't directly mutate state, but they can have external side-effects (such as loading data).
+// Создатели действий (action creators) - это функции, открытые для компонентов UI (UI components), 
+// которые вызывают переход состояния (state). Они не изменяют состояние (state) напрямую, 
+// но могут иметь внешние побочные эффекты (такие как загрузка данных).
 
 export const actionCreators = {
     increment: () => ({ type: 'INCREMENT_COUNT' } as IncrementCountAction),
@@ -29,7 +30,8 @@ export const actionCreators = {
 };
 
 // ----------------
-// REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
+// Редюсер (reducer) - для заданного состояния (state) и действия (action) возвращает новое состояние (state).
+// Чтобы поддерживать путешествия во времени, это не должно мутировать старое состояние (state).
 
 export const reducer: Reducer<CounterState> = (state: CounterState | undefined, incomingAction: Action): CounterState => {
     if (state === undefined) {

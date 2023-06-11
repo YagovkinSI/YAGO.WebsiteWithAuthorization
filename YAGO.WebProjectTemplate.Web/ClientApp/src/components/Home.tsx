@@ -3,20 +3,20 @@ import { connect } from 'react-redux';
 
 const Home = () => (
   <div>
-    <h1>Hello, world!</h1>
-    <p>Welcome to your new single-page application, built with:</p>
+    <h1>Привет, мир!</h1>
+    <p>Добро пожаловать в ваше новое одностраничное приложение, созданное с помощью:</p>
     <ul>
-      <li><a href='https://get.asp.net/' target="_blank">ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx' target="_blank">C#</a> for cross-platform server-side code</li>
-      <li><a href='https://facebook.github.io/react/' target="_blank">React</a> and <a href='https://redux.js.org/' target="_blank">Redux</a> for client-side code</li>
-      <li><a href='http://getbootstrap.com/' target="_blank">Bootstrap</a> for layout and styling</li>
+      <li><a href='https://get.asp.net/' target='_blank'>ASP.NET Core</a> и <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx' target='_blank'>C#</a> для кроссплатформенного серверного кода</li>
+      <li><a href='https://facebook.github.io/react/' target='_blank'>React</a> и <a href='https://redux.js.org/' target='_blank'>Redux</a> для клиентского кода</li>
+      <li><a href='http://getbootstrap.com/' target='_blank'>Bootstrap</a> для макета и стиля</li>
     </ul>
-    <p>To help you get started, we have also set up:</p>
+    <p>Чтобы помочь вам начать работу, мы также создали:</p>
     <ul>
-      <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-      <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-      <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
+      <li><strong>Клиентская навигация</strong>. Например, нажмите <em>Счетчик</em>, а затем <em>Назад</em>, чтобы вернуться сюда.</li>
+      <li><strong>Режим разработки интеграции с сервером</strong>. В режиме разработки сервер разработки из <code>create-react-app</code> работает в фоновом режиме автоматически, поэтому ресурсы на стороне клиента создаются динамически по запросу, а страница обновляется при изменении любого файла.</li>
+      <li><strong>Эффективная сборка в режиме релиза</strong>. В режиме релиза, функции режима разработки отключены, и ваша конфигурация <code>dotnet publish</code> создает минимизированные, эффективно связанные файлы JavaScript.</li>
     </ul>
-    <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
+    <p>Подкаталог <code>ClientApp</code> - это стандартное приложение React, основанное на шаблоне <code>create-react-app</code>. Если вы откроете командную строку в этом каталоге, вы сможете запускать команды <code>npm</code>, такие как <code>npm test</code> или <code>npm install</code>.</p>
   </div>
 );
 

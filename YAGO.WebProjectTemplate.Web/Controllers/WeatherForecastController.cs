@@ -11,7 +11,7 @@ namespace YAGO.WebProjectTemplate.Web.Controllers
 	{
 		private static readonly string[] Summaries = new[]
 		{
-			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+			"Ясно", "Облачно", "Пасмурно", "Дождь", "Ливень", "Град", "Гроза", "Снег"
 		};
 
 		[HttpGet]
