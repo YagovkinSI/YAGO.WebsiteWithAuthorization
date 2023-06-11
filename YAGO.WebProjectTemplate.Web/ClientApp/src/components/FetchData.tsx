@@ -1,8 +1,22 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as WeatherForecastsStore from '../store/WeatherForecasts';
+import { Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    fontWeight: 'bold'
+  }
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
 
 // Во время выполнения Redux объединит...
 type WeatherForecastProps =
@@ -12,6 +26,7 @@ type WeatherForecastProps =
   & typeof WeatherForecastsStore.actionCreators;
 
 const FetchData: React.FC<WeatherForecastProps> = (props) => {
+  const navigate = useNavigate();
 
   // получаем значение startDateIndex из текущего URL-адреса, согласно пути маршрута (route).
   const { startDateIndex } = useParams();
@@ -26,26 +41,33 @@ const FetchData: React.FC<WeatherForecastProps> = (props) => {
 
   const renderForecastsTable = () => {
     return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th style={{ width: '25%' }}>Дата</th>
-            <th style={{ width: '22%' }}>℃</th>
-            <th style={{ width: '22%' }}>℉</th>
-            <th style={{ width: '31%' }}>Погода</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) =>
-            <tr key={forecast.date}>
-              <td>{new Date(Date.parse(forecast.date)).toLocaleDateString()}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell style={{ width: '25%' }}>Дата</StyledTableCell>
+              <StyledTableCell style={{ width: '22%' }}>℃</StyledTableCell>
+              <StyledTableCell style={{ width: '22%' }}>℉</StyledTableCell>
+              <StyledTableCell style={{ width: '31%' }}>Погода</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) => (
+              <StyledTableRow
+                key={forecast.date}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <StyledTableCell component="th" scope="row">
+                  {new Date(Date.parse(forecast.date)).toLocaleDateString()}
+                </StyledTableCell>
+                <StyledTableCell>{forecast.temperatureC}</StyledTableCell>
+                <StyledTableCell>{forecast.temperatureF}</StyledTableCell>
+                <StyledTableCell>{forecast.summary}</StyledTableCell>
+              </StyledTableRow >
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
   }
 
@@ -54,10 +76,10 @@ const FetchData: React.FC<WeatherForecastProps> = (props) => {
     const nextStartDateIndex = (props.startDateIndex || 0) + 5;
 
     return (
-      <div className="d-flex justify-content-between">
-        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${prevStartDateIndex}`}>Назад</Link>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+        <Button variant='outlined' onClick={() => navigate(`/fetch-data/${prevStartDateIndex}`)}>Назад</Button>
         {props.isLoading && <span>Загрузка...</span>}
-        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${nextStartDateIndex}`}>Далее</Link>
+        <Button variant='outlined' onClick={() => navigate(`/fetch-data/${nextStartDateIndex}`)}>Далее</Button>
       </div>
     );
   }
