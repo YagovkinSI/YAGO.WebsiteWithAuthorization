@@ -2,7 +2,6 @@ import * as React from 'react';
 import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-import './NavMenu.css';
 
 const NavMenu: React.FC = () => {
     const navigate = useNavigate();
