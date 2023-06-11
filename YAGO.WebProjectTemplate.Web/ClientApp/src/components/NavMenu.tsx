@@ -39,7 +39,6 @@ const NavMenu: React.FC = () => {
                     <Typography
                         variant="h6"
                         noWrap
-                        style={{ cursor: 'pointer' }}
                         onClick={() => onLinkClick('/')}
                         sx={{
                             mr: 2,
@@ -49,6 +48,7 @@ const NavMenu: React.FC = () => {
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
+                            cursor: 'pointer'
                         }}
                     >
                         YAGO
@@ -93,7 +93,6 @@ const NavMenu: React.FC = () => {
                     <Typography
                         variant="h5"
                         noWrap
-                        style={{ cursor: 'pointer' }}
                         onClick={() => onLinkClick('/')}
                         sx={{
                             mr: 2,
@@ -105,6 +104,7 @@ const NavMenu: React.FC = () => {
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
+                            cursor: 'pointer'
                         }}
                     >
                         YAGO
