@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import * as CounterStore from '../store/Counter';
+import { Button } from '@mui/material';
 
 type CounterProps =
     CounterStore.CounterState &
@@ -17,11 +18,10 @@ class Counter extends React.PureComponent<CounterProps> {
 
                 <p aria-live="polite">Текущее значение: <strong>{this.props.count}</strong></p>
 
-                <button type="button"
-                    className="btn btn-outline-secondary btn-sm"
+                <Button variant="contained"
                     onClick={() => { this.props.increment(); }}>
                     Увеличить
-                </button>
+                </Button>
             </React.Fragment>
         );
     }
