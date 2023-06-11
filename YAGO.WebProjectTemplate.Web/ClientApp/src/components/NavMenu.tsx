@@ -54,7 +54,7 @@ const NavMenu: React.FC = () => {
                         YAGO
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
+                    <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -99,6 +99,7 @@ const NavMenu: React.FC = () => {
                             mr: 2,
                             display: { xs: 'flex', sm: 'none' },
                             flexGrow: 1,
+                            justifyContent: 'center',
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
