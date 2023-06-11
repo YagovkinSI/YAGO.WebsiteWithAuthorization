@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Box, Button, Collapse, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 import './NavMenu.css';
@@ -34,16 +34,16 @@ const NavMenu: React.FC = () => {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl">
+            <Container>
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"
                         noWrap
-                        component="a"
+                        style={{ cursor: 'pointer' }}
                         onClick={() => onLinkClick('/')}
                         sx={{
                             mr: 2,
-                            display: { xs: 'none', md: 'flex' },
+                            display: { xs: 'none', sm: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
@@ -51,10 +51,10 @@ const NavMenu: React.FC = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        YAGO Шаблон веб-проекта
+                        YAGO
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -80,7 +80,7 @@ const NavMenu: React.FC = () => {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
+                                display: { xs: 'block', sm: 'none' },
                             }}
                         >
                             {links.map((link: Link) => (
@@ -93,11 +93,11 @@ const NavMenu: React.FC = () => {
                     <Typography
                         variant="h5"
                         noWrap
-                        component="a"
+                        style={{ cursor: 'pointer' }}
                         onClick={() => onLinkClick('/')}
                         sx={{
                             mr: 2,
-                            display: { xs: 'flex', md: 'none' },
+                            display: { xs: 'flex', sm: 'none' },
                             flexGrow: 1,
                             fontFamily: 'monospace',
                             fontWeight: 700,
@@ -106,9 +106,9 @@ const NavMenu: React.FC = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        YAGO Шаблон веб-проекта
+                        YAGO
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
                         {links.map((link) => (
                             <Button
                                 key={link.path}
