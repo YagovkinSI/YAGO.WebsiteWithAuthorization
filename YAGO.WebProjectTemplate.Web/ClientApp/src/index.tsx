@@ -1,28 +1,29 @@
 import 'bootstrap/dist/css/bootstrap.css';
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
-import { createBrowserHistory } from 'history';
-import configureStore from './store/configureStore';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import { reducers } from './store';
+import { configureStore } from '@reduxjs/toolkit';
 
-// Создает историю браузера для использования в хранилизе (store) Redux
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href') as string;
-const history = createBrowserHistory({ basename: baseUrl });
+// Получает экземпляр хранилища (store) для всего приложения
+const appReducer = { reducer: { ...reducers } };
+const store = configureStore(appReducer);
 
-// Получает экземпляр хранилища (store) для всего приложения, 
-// предварительно заполнив его состоянием с сервера, где это возможно
-const store = configureStore(history);
+// Находим элемент 'root' и используем его при создании корня (root) 
+// для отображения компонентов React внутри узла DOM браузера.
+const container = document.getElementById('root');
+const root = createRoot(container!);
 
-ReactDOM.render(
+root.render(
     <Provider store={store}>
-        <ConnectedRouter history={history}>
+        <BrowserRouter>
             <App />
-        </ConnectedRouter>
-    </Provider>,
-    document.getElementById('root'));
+        </BrowserRouter>
+    </Provider>
+);
 
 registerServiceWorker();
