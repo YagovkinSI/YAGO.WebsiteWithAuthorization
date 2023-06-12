@@ -1,6 +1,6 @@
 import { Action, Reducer } from 'redux';
 import { AppThunkAction } from './';
-import { requestService } from '../sevices/requestService';
+import { RequestType, requestService } from '../sevices/requestService';
 
 // -----------------
 // Состояние (state) - определяет тип данных, хранящихся в хранилище (store) Redux.
@@ -47,7 +47,7 @@ export const actionCreators = {
         const appState = getState();
         // Загружайте данные только в том случае, если их у нас еще нет (и они еще не загружаются)
         if (appState && appState.weatherForecasts && startDateIndex !== appState.weatherForecasts.startDateIndex) {
-            requestService.request(`weatherforecast`)
+            requestService.request({ path: `weatherforecast`, type: RequestType.Get})
                 .then(response =>
                     dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: response.data })
                 );
