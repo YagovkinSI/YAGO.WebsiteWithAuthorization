@@ -40,32 +40,36 @@ const FetchData: React.FC<WeatherForecastProps> = (props) => {
   });
 
   const renderTableHead = () => {
-    return <TableHead>
-      <TableRow>
-        <StyledTableCell sx={{ width: { xs: '34%', sm: '25%' } }}>Дата</StyledTableCell>
-        <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℃</StyledTableCell>
-        <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℉</StyledTableCell>
-        <StyledTableCell sx={{ width: { xs: '30%', sm: '25%' } }}>Погода</StyledTableCell>
-      </TableRow>
-    </TableHead>
+    return (
+      <TableHead>
+        <TableRow>
+          <StyledTableCell sx={{ width: { xs: '34%', sm: '25%' } }}>Дата</StyledTableCell>
+          <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℃</StyledTableCell>
+          <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℉</StyledTableCell>
+          <StyledTableCell sx={{ width: { xs: '30%', sm: '25%' } }}>Погода</StyledTableCell>
+        </TableRow>
+      </TableHead>
+    )
   }
 
   const renderTableBody = () => {
-    return <TableBody>
-      {props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) => (
-        <StyledTableRow
-          key={forecast.date}
-          sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        >
-          <StyledTableCell component="th" scope="row">
-            {new Date(Date.parse(forecast.date)).toLocaleDateString()}
-          </StyledTableCell>
-          <StyledTableCell>{forecast.temperatureC}</StyledTableCell>
-          <StyledTableCell>{forecast.temperatureF}</StyledTableCell>
-          <StyledTableCell>{forecast.summary}</StyledTableCell>
-        </StyledTableRow >
-      ))}
-    </TableBody>
+    return (
+      <TableBody>
+        {props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) => (
+          <StyledTableRow
+            key={forecast.date}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <StyledTableCell component="th" scope="row">
+              {new Date(Date.parse(forecast.date)).toLocaleDateString()}
+            </StyledTableCell>
+            <StyledTableCell>{forecast.temperatureC}</StyledTableCell>
+            <StyledTableCell>{forecast.temperatureF}</StyledTableCell>
+            <StyledTableCell>{forecast.summary}</StyledTableCell>
+          </StyledTableRow >
+        ))}
+      </TableBody>
+    )
   }
 
   const renderForecastsTable = () => {
