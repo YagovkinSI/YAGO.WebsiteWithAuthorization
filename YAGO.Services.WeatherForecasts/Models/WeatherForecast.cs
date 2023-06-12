@@ -1,6 +1,6 @@
 using System;
 
-namespace YAGO.WebProjectTemplate.Web
+namespace YAGO.Services.WeatherForecasts.Models
 {
 	public class WeatherForecast
 	{
