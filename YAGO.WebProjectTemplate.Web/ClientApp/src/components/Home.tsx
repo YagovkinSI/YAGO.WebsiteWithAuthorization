@@ -8,7 +8,7 @@ const Home = () => (
     <ul>
       <li><a href='https://get.asp.net/' target='_blank'>ASP.NET Core</a> и <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx' target='_blank'>C#</a> для кроссплатформенного серверного кода</li>
       <li><a href='https://facebook.github.io/react/' target='_blank'>React</a> и <a href='https://redux.js.org/' target='_blank'>Redux</a> для клиентского кода</li>
-      <li><a href='http://getbootstrap.com/' target='_blank'>Bootstrap</a> для макета и стиля</li>
+      <li><a href='https://mui.com/' target='_blank'>Material UI</a> для макета и стиля</li>
     </ul>
     <p>Чтобы помочь вам начать работу, мы также создали:</p>
     <ul>

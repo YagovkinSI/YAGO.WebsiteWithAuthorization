@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container } from 'reactstrap';
+import Container from '@mui/material/Container';
 import NavMenu from './NavMenu';
 
 export interface LayoutProps {
