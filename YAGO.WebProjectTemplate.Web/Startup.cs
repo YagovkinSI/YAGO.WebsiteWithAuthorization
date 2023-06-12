@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+п»їusing Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
@@ -17,21 +17,21 @@ namespace YAGO.WebProjectTemplate.Web
 
 		public IConfiguration Configuration { get; }
 
-		// Этот метод вызывается средой выполнения. Используйте этот метод для добавления служб в контейнер.
+		// Р­С‚РѕС‚ РјРµС‚РѕРґ РІС‹Р·С‹РІР°РµС‚СЃСЏ СЃСЂРµРґРѕР№ РІС‹РїРѕР»РЅРµРЅРёСЏ. РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЌС‚РѕС‚ РјРµС‚РѕРґ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ СЃР»СѓР¶Р± РІ РєРѕРЅС‚РµР№РЅРµСЂ.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddScoped<WeatherForecastService>();
 
 			services.AddControllersWithViews();
 
-			// В подакшене (production) файлы React будут обслуживаться из этого каталога.
+			// Р’ РїРѕРґР°РєС€РµРЅРµ (production) С„Р°Р№Р»С‹ React Р±СѓРґСѓС‚ РѕР±СЃР»СѓР¶РёРІР°С‚СЊСЃСЏ РёР· СЌС‚РѕРіРѕ РєР°С‚Р°Р»РѕРіР°.
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/build";
 			});
 		}
 
-		// Этот метод вызывается средой выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
+		// Р­С‚РѕС‚ РјРµС‚РѕРґ РІС‹Р·С‹РІР°РµС‚СЃСЏ СЃСЂРµРґРѕР№ РІС‹РїРѕР»РЅРµРЅРёСЏ. РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЌС‚РѕС‚ РјРµС‚РѕРґ РґР»СЏ РЅР°СЃС‚СЂРѕР№РєРё РєРѕРЅРІРµР№РµСЂР° HTTP-Р·Р°РїСЂРѕСЃРѕРІ.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			ExceptionHandling(app, env);
@@ -65,7 +65,7 @@ namespace YAGO.WebProjectTemplate.Web
 			else
 			{
 				app.UseExceptionHandler("/Error");
-				// Значение HSTS по умолчанию — 30 дней. Вы можете изменить это для рабочих сценариев, см. https://aka.ms/aspnetcore-hsts.
+				// Р—РЅР°С‡РµРЅРёРµ HSTS РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ вЂ” 30 РґРЅРµР№. Р’С‹ РјРѕР¶РµС‚Рµ РёР·РјРµРЅРёС‚СЊ СЌС‚Рѕ РґР»СЏ СЂР°Р±РѕС‡РёС… СЃС†РµРЅР°СЂРёРµРІ, СЃРј. https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
 		}
