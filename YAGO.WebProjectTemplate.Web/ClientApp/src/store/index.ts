@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { weatherForecastsSlice } from './WeatherForecasts';
+import { localhostApi } from '../sevices/localhostApi';
 
 // Всякий раз, когда отправляется (dispatched) действие (action), Redux будет обновлять каждое 
 // свойство состояния приложения (application state property) верхнего уровня, используя 
@@ -11,12 +11,15 @@ import { weatherForecastsSlice } from './WeatherForecasts';
 // reducer (reducer) работал с соответствующим типом свойства ApplicationState.
 const rootReducer = combineReducers({
     counter: Counter.counterSlice.reducer,
-    weatherForecasts: weatherForecastsSlice.reducer
+    [localhostApi.reducerPath]: localhostApi.reducer,
 });
 
 export const setupStore = () => {
     return configureStore({
-        reducer: rootReducer
+        reducer: rootReducer,
+        // Добавление промежуточного ПО (middleware) API включает кэширование, аннулирование, опрос и другие полезные функции rtk-query.
+        middleware: (getDefaultMiddleware) =>
+          getDefaultMiddleware().concat(localhostApi.middleware),
     })
 }
 
