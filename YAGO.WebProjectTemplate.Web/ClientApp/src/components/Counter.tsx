@@ -8,23 +8,21 @@ type CounterProps =
     CounterStore.CounterState &
     typeof CounterStore.actionCreators;
 
-class Counter extends React.PureComponent<CounterProps> {
-    public render() {
-        return (
-            <React.Fragment>
-                <h1>Счетчик</h1>
+const Counter: React.FC<CounterProps> = (props) => {
+    return (
+        <React.Fragment>
+            <h1>Счетчик</h1>
 
-                <p>Это простой пример компонента React.</p>
+            <p>Это простой пример компонента React.</p>
 
-                <p aria-live="polite">Текущее значение: <strong>{this.props.count}</strong></p>
+            <p aria-live="polite">Текущее значение: <strong>{props.count}</strong></p>
 
-                <Button variant="contained"
-                    onClick={() => { this.props.increment(); }}>
-                    Увеличить
-                </Button>
-            </React.Fragment>
-        );
-    }
+            <Button variant="contained"
+                onClick={() => { props.increment(); }}>
+                Увеличить
+            </Button>
+        </React.Fragment>
+    );
 };
 
 export default connect(
