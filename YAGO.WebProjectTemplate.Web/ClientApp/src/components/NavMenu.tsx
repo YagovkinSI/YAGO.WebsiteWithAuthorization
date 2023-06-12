@@ -35,68 +35,68 @@ const NavMenu: React.FC = () => {
     }
 
     const renderMenu = () => {
-        return <Menu
-            id="menu-appbar"
-            anchorEl={anchorElNav}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-            }}
-            open={Boolean(anchorElNav)}
-            onClose={handleCloseNavMenu}
-            sx={{
-                display: { xs: 'block', sm: 'none' },
-            }}
-        >
-            {links.map((link: Link) => (
-                <MenuItem key={link.path} onClick={() => onLinkClick(link.path)}>
-                    <Typography textAlign="center">{link.name}</Typography>
-                </MenuItem>
-            ))}
-        </Menu>
+        return (
+            <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left', }}
+                keepMounted
+                transformOrigin={{ vertical: 'top', horizontal: 'left', }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                    display: { xs: 'block', sm: 'none' },
+                }}
+            >
+                {links.map((link: Link) => (
+                    <MenuItem key={link.path} onClick={() => onLinkClick(link.path)}>
+                        <Typography textAlign="center">{link.name}</Typography>
+                    </MenuItem>
+                ))}
+            </Menu>
+        )
     }
 
     const renderMenuIcon = () => {
-        return <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
-            <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-            >
-                <MenuIcon />
-            </IconButton>
-            {renderMenu()}
-        </Box>
+        return (
+            <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+                <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color="inherit"
+                >
+                    <MenuIcon />
+                </IconButton>
+                {renderMenu()}
+            </Box>
+        )
     }
 
     const renderLogo = () => {
-        return <Typography
-            variant={isSm ? 'h6' : 'h5'}
-            noWrap
-            onClick={() => onLinkClick('/')}
-            sx={{
-                mr: 2,
-                display: 'flex',
-                flexGrow: { xs: 1, sm: 0 },
-                justifyContent: { xs: 'center', sm: 'start' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-                cursor: 'pointer'
-            }}
-        >
-            YAGO
-        </Typography>
+        return (
+            <Typography
+                variant={isSm ? 'h6' : 'h5'}
+                noWrap
+                onClick={() => onLinkClick('/')}
+                sx={{
+                    mr: 2,
+                    display: 'flex',
+                    flexGrow: { xs: 1, sm: 0 },
+                    justifyContent: { xs: 'center', sm: 'start' },
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.3rem',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                    cursor: 'pointer'
+                }}
+            >
+                YAGO
+            </Typography>
+        )
     }
 
     const renderLinks = () => {
