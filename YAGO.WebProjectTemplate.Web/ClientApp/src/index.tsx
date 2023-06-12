@@ -4,12 +4,10 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { reducers } from './store';
-import { configureStore } from '@reduxjs/toolkit';
+import { setupStore } from './store';
 
 // Получает экземпляр хранилища (store) для всего приложения
-const appReducer = { reducer: { ...reducers } };
-const store = configureStore(appReducer);
+const store = setupStore();
 
 // Находим элемент 'root' и используем его при создании корня (root) 
 // для отображения компонентов React внутри узла DOM браузера.
