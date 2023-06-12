@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using YAGO.Services.WeatherForecasts;
 
 namespace YAGO.WebProjectTemplate.Web
 {
@@ -19,6 +20,8 @@ namespace YAGO.WebProjectTemplate.Web
 		// Этот метод вызывается средой выполнения. Используйте этот метод для добавления служб в контейнер.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddScoped<WeatherForecastService>();
+
 			services.AddControllersWithViews();
 
 			// В подакшене (production) файлы React будут обслуживаться из этого каталога.
