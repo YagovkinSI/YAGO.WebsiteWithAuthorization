@@ -47,10 +47,11 @@ export const actionCreators = {
         const appState = getState();
         // Загружайте данные только в том случае, если их у нас еще нет (и они еще не загружаются)
         if (appState && appState.weatherForecasts && startDateIndex !== appState.weatherForecasts.startDateIndex) {
-            requestService.request({ path: `weatherforecast`, type: RequestType.Get})
-                .then(response =>
-                    dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: response.data })
-                );
+            requestService.request<WeatherForecast[]>({ path: `weatherforecast`, type: RequestType.Get })
+                .then(response => {
+                    if (response.success && response.data != null)
+                        dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: response.data })
+                });
 
             dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
         }

@@ -27,8 +27,8 @@ const axiosRequest = async (requestParams: RequestParams)
     }
 }
 
-const request = async (requestParams: RequestParams)
-    : Promise<Response<any>> => {
+const request = async <T>(requestParams: RequestParams)
+    : Promise<Response<T>> => {
     try {
         const response = await axiosRequest(requestParams)
         if (!response.data)
@@ -37,14 +37,14 @@ const request = async (requestParams: RequestParams)
             data: response.data,
             error: undefined,
             success: true
-        } as Response<any>
+        } as Response<T>
     } catch (error) {
         const errorMessage = getErrorMessage(error as AxiosError);
         return {
             data: undefined,
             error: errorMessage,
             success: false
-        } as Response<any>
+        } as Response<T>
     }
 }
 
