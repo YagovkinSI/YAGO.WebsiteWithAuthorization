@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using YAGO.Services.WeatherForecasts;
 
 namespace YAGO.WebProjectTemplate.Web
@@ -29,12 +30,20 @@ namespace YAGO.WebProjectTemplate.Web
 			{
 				configuration.RootPath = "ClientApp/build";
 			});
+
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "YAGO Web Project Template", Version = "v1" });
+			});
 		}
 
 		// Этот метод вызывается средой выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			ExceptionHandling(app, env);
+
+			app.UseSwagger();
+			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YAGO Web Project Template v1"));
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
@@ -61,7 +70,9 @@ namespace YAGO.WebProjectTemplate.Web
 		private static void ExceptionHandling(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
+			{
 				app.UseDeveloperExceptionPage();
+			}
 			else
 			{
 				app.UseExceptionHandler("/Error");
