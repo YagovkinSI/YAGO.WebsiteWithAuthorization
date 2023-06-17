@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 // -----------------
 // Состояние (state) - определяет тип данных, хранящихся в хранилище (store) Redux.
 
-export interface CounterState {
+interface CounterState {
     count: number;
 }
 
@@ -12,7 +12,7 @@ const initialState: CounterState = {
 }
 
 // Создаёт редюсер (reducer) для обработки состояния (state) использую срез (slice) RTK 
-export const counterSlice = createSlice({
+const counterSlice = createSlice({
     name: 'counter',
     initialState,
     reducers: {
@@ -24,3 +24,6 @@ export const counterSlice = createSlice({
         }
     }
 })
+
+export const counterActionIncrement = counterSlice.actions.increment;
+export const counterReducer = counterSlice.reducer;
