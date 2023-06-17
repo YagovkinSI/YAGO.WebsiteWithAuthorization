@@ -15,23 +15,40 @@ const links: Link[] = [
 ];
 
 const NavMenu: React.FC = () => {
-    const navigate = useNavigate();
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
 
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const render = () => {
+        return (
+            <AppBar position="static">
+                <Container>
+                    <Toolbar disableGutters>
+                        {renderMenuIcon()}
+                        {renderLogo()}
+                        {renderLinks()}
+                    </Toolbar>
+                </Container>
+            </AppBar >
+        )
+    }
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const onLinkClick = (path: string) => {
-        navigate(path);
-        handleCloseNavMenu();
+    const renderMenuIcon = () => {
+        return (
+            <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+                <IconButton
+                    size="large"
+                    aria-label="main menu"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={(event) => setAnchorElNav(event.currentTarget)}
+                    color="inherit"
+                >
+                    <MenuIcon />
+                </IconButton>
+                {renderMenu()}
+            </Box>
+        )
     }
 
     const renderMenu = () => {
@@ -43,7 +60,7 @@ const NavMenu: React.FC = () => {
                 keepMounted
                 transformOrigin={{ vertical: 'top', horizontal: 'left', }}
                 open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+                onClose={() => setAnchorElNav(null)}
                 sx={{
                     display: { xs: 'block', sm: 'none' },
                 }}
@@ -57,22 +74,10 @@ const NavMenu: React.FC = () => {
         )
     }
 
-    const renderMenuIcon = () => {
-        return (
-            <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color="inherit"
-                >
-                    <MenuIcon />
-                </IconButton>
-                {renderMenu()}
-            </Box>
-        )
+    const navigate = useNavigate()
+    const onLinkClick = (path: string) => {
+        navigate(path)
+        setAnchorElNav(null)
     }
 
     const renderLogo = () => {
@@ -113,17 +118,7 @@ const NavMenu: React.FC = () => {
         </Box>
     }
 
-    return (
-        <AppBar position="static">
-            <Container>
-                <Toolbar disableGutters>
-                    {renderMenuIcon()}
-                    {renderLogo()}
-                    {renderLinks()}
-                </Toolbar>
-            </Container>
-        </AppBar >
-    );
+    return render();
 }
 
 export default NavMenu;

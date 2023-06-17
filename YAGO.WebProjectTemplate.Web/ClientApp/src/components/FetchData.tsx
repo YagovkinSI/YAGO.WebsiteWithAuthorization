@@ -1,33 +1,37 @@
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import * as WeatherForecastsStore from '../store/WeatherForecasts';
-import { Box, Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, styled } from '@mui/material';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { useWeatherForecastsQuery } from '../store/WeatherForecasts';
-
-const StyledTableCell = styled(TableCell)(() => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontWeight: 'bold'
-  }
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover
-  },
-}));
+import { Box, Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, TableCell, styled } from '@mui/material';
+import { tableCellClasses } from '@mui/material/TableCell';
+import { WeatherForecast, useWeatherForecastsQuery } from '../store/WeatherForecasts';
 
 const FetchData: React.FC = () => {
-  const navigate = useNavigate()
-
   // получаем значение startDateIndex из текущего URL-адреса, согласно пути маршрута (route).
   const { startDateIndex } = useParams();
-  const startDateIndexNum = startDateIndex == undefined
+  const startDateIndexNum = startDateIndex == null
     ? 0
     : parseInt(startDateIndex, 10) || 0;
-
   // Использование хука (hook) запроса автоматически извлекает данные и возвращает значения запроса
   const { data, isLoading } = useWeatherForecastsQuery(startDateIndexNum)
+
+  const render = () => {
+    return <React.Fragment>
+      <h1 id="tabelLabel">Прогноз погоды</h1>
+      <p>Этот компонент демонстрирует получение данных с сервера и работу с параметрами URL.</p>
+      {renderForecastsTable()}
+      {renderPagination()}
+    </React.Fragment>
+  }
+
+  const renderForecastsTable = () => {
+    return (
+      <TableContainer component={Paper}>
+        <Table aria-label="customized table">
+          {renderTableHead()}
+          {renderTableBody()}
+        </Table>
+      </TableContainer>
+    );
+  }
 
   const renderTableHead = () => {
     return (
@@ -45,7 +49,7 @@ const FetchData: React.FC = () => {
   const renderTableBody = () => {
     return (
       <TableBody>
-        {data?.map((forecast: WeatherForecastsStore.WeatherForecast) => (
+        {data?.map((forecast: WeatherForecast) => (
           <StyledTableRow
             key={forecast.date}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -62,37 +66,30 @@ const FetchData: React.FC = () => {
     )
   }
 
-  const renderForecastsTable = () => {
-    return (
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          {renderTableHead()}
-          {renderTableBody()}
-        </Table>
-      </TableContainer>
-    );
-  }
-
+  const navigate = useNavigate()
   const renderPagination = () => {
-    const prevStartDateIndex = startDateIndexNum - 5;
-    const nextStartDateIndex = startDateIndexNum + 5;
     return (
       <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
-        <Button variant='outlined' onClick={() => navigate(`/fetch-data/${prevStartDateIndex}`)}>Назад</Button>
+        <Button variant='outlined' onClick={() => navigate(`/fetch-data/${startDateIndexNum - 5}`)}>Назад</Button>
         {isLoading && <span>Загрузка...</span>}
-        <Button variant='outlined' onClick={() => navigate(`/fetch-data/${nextStartDateIndex}`)}>Далее</Button>
+        <Button variant='outlined' onClick={() => navigate(`/fetch-data/${startDateIndexNum + 5}`)}>Далее</Button>
       </Box>
     );
   }
 
-  return (
-    <React.Fragment>
-      <h1 id="tabelLabel">Прогноз погоды</h1>
-      <p>Этот компонент демонстрирует получение данных с сервера и работу с параметрами URL.</p>
-      {renderForecastsTable()}
-      {renderPagination()}
-    </React.Fragment>
-  )
+  return render();
 }
+
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    fontWeight: 'bold'
+  }
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover
+  },
+}));
 
 export default FetchData;

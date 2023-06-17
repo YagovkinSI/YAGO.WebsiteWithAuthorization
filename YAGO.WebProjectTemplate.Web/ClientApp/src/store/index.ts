@@ -1,16 +1,15 @@
-import * as Counter from './Counter';
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { localhostApi } from '../sevices/localhostApi';
+import { counterReducer } from './Counter';
 
 // Всякий раз, когда отправляется (dispatched) действие (action), Redux будет обновлять каждое 
 // свойство состояния приложения (application state property) верхнего уровня, используя 
 // редюсер (reducer) с соответствующим именем. Важно, чтобы имена точно совпадали, и чтобы 
 // reducer (reducer) работал с соответствующим типом свойства ApplicationState.
 const rootReducer = combineReducers({
-    counter: Counter.counterSlice.reducer,
+    counter: counterReducer,
     [localhostApi.reducerPath]: localhostApi.reducer,
 });
 
@@ -19,7 +18,7 @@ export const setupStore = () => {
         reducer: rootReducer,
         // Добавление промежуточного ПО (middleware) API включает кэширование, аннулирование, опрос и другие полезные функции rtk-query.
         middleware: (getDefaultMiddleware) =>
-          getDefaultMiddleware().concat(localhostApi.middleware),
+            getDefaultMiddleware().concat(localhostApi.middleware),
     })
 }
 
