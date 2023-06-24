@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow, TableCell, styled } from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
+import { Box, Button } from '@mui/material';
 import { WeatherForecast, useWeatherForecastsQuery } from '../store/WeatherForecasts';
+import AppTable, { AppTableColumn, AppTableRow } from '../elements/AppTable';
 
 const FetchData: React.FC = () => {
   // получаем значение startDateIndex из текущего URL-адреса, согласно пути маршрута (route).
@@ -23,47 +23,28 @@ const FetchData: React.FC = () => {
   }
 
   const renderForecastsTable = () => {
+    const columnList: AppTableColumn[] = [
+      { title: 'Дата', sx: { width: { xs: '34%', sm: '25%' } } },
+      { title: '℃', sx: { width: { xs: '18%', sm: '25%' } } },
+      { title: '℉', sx: { width: { xs: '18%', sm: '25%' } } },
+      { title: 'Погода', sx: { width: { xs: '30%', sm: '25%' } } },
+    ]
+    const rowList: AppTableRow[] = data?.map((forecast: WeatherForecast) => {
+      return {
+        key: forecast.date,
+        cells: [
+          new Date(Date.parse(forecast.date)).toLocaleDateString(),
+          forecast.temperatureC,
+          forecast.temperatureF,
+          forecast.summary
+        ]
+      } as AppTableRow
+    }) ?? []
+
     return (
-      <TableContainer component={Paper}>
-        <Table aria-label="customized table">
-          {renderTableHead()}
-          {renderTableBody()}
-        </Table>
-      </TableContainer>
+
+      <AppTable columnList={columnList} rowList={rowList} />
     );
-  }
-
-  const renderTableHead = () => {
-    return (
-      <TableHead>
-        <TableRow>
-          <StyledTableCell sx={{ width: { xs: '34%', sm: '25%' } }}>Дата</StyledTableCell>
-          <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℃</StyledTableCell>
-          <StyledTableCell sx={{ width: { xs: '18%', sm: '25%' } }}>℉</StyledTableCell>
-          <StyledTableCell sx={{ width: { xs: '30%', sm: '25%' } }}>Погода</StyledTableCell>
-        </TableRow>
-      </TableHead>
-    )
-  }
-
-  const renderTableBody = () => {
-    return (
-      <TableBody>
-        {data?.map((forecast: WeatherForecast) => (
-          <StyledTableRow
-            key={forecast.date}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          >
-            <StyledTableCell component="th" scope="row">
-              {new Date(Date.parse(forecast.date)).toLocaleDateString()}
-            </StyledTableCell>
-            <StyledTableCell>{forecast.temperatureC}</StyledTableCell>
-            <StyledTableCell>{forecast.temperatureF}</StyledTableCell>
-            <StyledTableCell>{forecast.summary}</StyledTableCell>
-          </StyledTableRow >
-        ))}
-      </TableBody>
-    )
   }
 
   const navigate = useNavigate()
@@ -79,17 +60,5 @@ const FetchData: React.FC = () => {
 
   return render();
 }
-
-const StyledTableCell = styled(TableCell)(() => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontWeight: 'bold'
-  }
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover
-  },
-}));
 
 export default FetchData;
