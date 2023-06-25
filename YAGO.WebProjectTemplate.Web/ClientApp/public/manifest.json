@@ -1,6 +1,6 @@
 {
-  "short_name": "YAGO.WebProjectTemplate.Web",
-  "name": "YAGO.WebProjectTemplate.Web",
+  "short_name": "YAGO.websitewithauthorization.Web",
+  "name": "YAGO.WebsiteWithAuthorization.Web",
   "icons": [
     {
       "src": "favicon.ico",

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using YAGO.Services.WeatherForecasts;
 
-namespace YAGO.WebProjectTemplate.Web
+namespace YAGO.WebsiteWithAuthorization.Web
 {
 	public class Startup
 	{
@@ -48,7 +48,7 @@ namespace YAGO.WebProjectTemplate.Web
 		{
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "YAGO Web Project Template", Version = "v1" });
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "YAGO Website With Authorization", Version = "v1" });
 			});
 		}
 
@@ -58,7 +58,7 @@ namespace YAGO.WebProjectTemplate.Web
 			ExceptionHandling(app, env);
 
 			app.UseSwagger();
-			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YAGO Web Project Template v1"));
+			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YAGO Website With Authorization v1"));
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();

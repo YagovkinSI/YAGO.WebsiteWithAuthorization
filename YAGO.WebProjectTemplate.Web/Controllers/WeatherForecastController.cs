@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using YAGO.Services.WeatherForecasts;
 using YAGO.Services.WeatherForecasts.Models;
 
-namespace YAGO.WebProjectTemplate.Web.Controllers
+namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
