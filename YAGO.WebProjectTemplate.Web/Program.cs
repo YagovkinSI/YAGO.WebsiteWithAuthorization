@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace YAGO.WebProjectTemplate.Web
+namespace YAGO.WebsiteWithAuthorization.Web
 {
 	public class Program
 	{
