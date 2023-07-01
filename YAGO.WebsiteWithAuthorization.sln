@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Web", "YAGO.WebProjectTemplate.Web\YAGO.WebsiteWithAuthorization.Web.csproj", "{765946AF-9334-4930-888A-3D4BE51DD88C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Web", "YAGO.WebsiteWithAuthorization.Web\YAGO.WebsiteWithAuthorization.Web.csproj", "{765946AF-9334-4930-888A-3D4BE51DD88C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C45E13E3-C862-4710-96DC-CD549E10A82C}"
 	ProjectSection(SolutionItems) = preProject
