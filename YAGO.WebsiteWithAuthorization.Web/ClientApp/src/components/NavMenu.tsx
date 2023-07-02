@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../store';
 
 interface Link {
     name: string,
@@ -14,10 +16,29 @@ const links: Link[] = [
     { name: 'Получение данных', path: '/fetch-data' },
 ];
 
+const userProfileLinks: Link[] = [
+    { name: 'Выход', path: '/logout' },
+];
+
+const guestProfileLinks: Link[] = [
+    { name: 'Вход', path: '/login' },
+    { name: 'Регистрация', path: '/register' },
+];
+
 const NavMenu: React.FC = () => {
+    const state = useAppSelector(state => state.authorizationReducer);
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser(event.currentTarget);
+    };
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     const render = () => {
         return (
@@ -27,6 +48,7 @@ const NavMenu: React.FC = () => {
                         {renderMenuIcon()}
                         {renderLogo()}
                         {renderLinks()}
+                        {renderLoginMenu()}
                     </Toolbar>
                 </Container>
             </AppBar >
@@ -116,6 +138,77 @@ const NavMenu: React.FC = () => {
                 </Button>
             ))}
         </Box>
+    }
+
+    function stringToColor(string: string) {
+        let hash = 0;
+        let i;
+
+        /* eslint-disable no-bitwise */
+        for (i = 0; i < string.length; i += 1) {
+            hash = string.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        let color = '#';
+
+        for (i = 0; i < 3; i += 1) {
+            const value = (hash >> (i * 8)) & 0xff;
+            color += `00${value.toString(16)}`.slice(-2);
+        }
+        /* eslint-enable no-bitwise */
+
+        return color;
+    }
+
+    function stringAvatar(name: string) {
+        return {
+            sx: {
+                bgcolor: stringToColor(name),
+            },
+            children: `${name[0]}`,
+        };
+    }
+
+    const renderLoginMenu = () => {
+        const userMenuLinks = state.data.isAuthorized
+            ? userProfileLinks
+            : guestProfileLinks;
+        return (<Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    {state.data.isAuthorized && state.data.user?.name != null
+                        ? <Avatar {...stringAvatar(state.data.user.name)} />
+                        :
+                        <Avatar>
+                            <PersonIcon />
+                        </Avatar>
+                    }
+                </IconButton>
+            </Tooltip>
+            <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+            >
+                {userMenuLinks.map((link) => (
+                    <MenuItem key={link.name} onClick={() => { onLinkClick(link.path); handleCloseUserMenu() }}>
+                        <Typography textAlign="center">{link.name}</Typography>
+                    </MenuItem>
+                ))}
+            </Menu>
+        </Box>
+        )
     }
 
     return render();
