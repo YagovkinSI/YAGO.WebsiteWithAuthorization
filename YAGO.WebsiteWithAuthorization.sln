@@ -12,6 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Services.WeatherForecasts", "YAGO.Services.WeatherForecasts\YAGO.Services.WeatherForecasts.csproj", "{22D66575-7675-49D4-98BB-8CDB8CE63184}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Entities", "YAGO.Entities\YAGO.Entities.csproj", "{E2503D26-57FB-41A0-A211-08F1C1EBFC89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Database", "YAGO.Database\YAGO.Database.csproj", "{6382A5AE-A166-4840-8C00-FCFB61281411}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAGO.Service.Authorization", "YAGO.Service.Authorization\YAGO.Service.Authorization.csproj", "{03550785-8FCE-499B-BED6-A2539FEDFCE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +32,18 @@ Global
 		{22D66575-7675-49D4-98BB-8CDB8CE63184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22D66575-7675-49D4-98BB-8CDB8CE63184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22D66575-7675-49D4-98BB-8CDB8CE63184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6382A5AE-A166-4840-8C00-FCFB61281411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6382A5AE-A166-4840-8C00-FCFB61281411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6382A5AE-A166-4840-8C00-FCFB61281411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6382A5AE-A166-4840-8C00-FCFB61281411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
