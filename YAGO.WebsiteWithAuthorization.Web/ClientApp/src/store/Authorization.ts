@@ -1,6 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { AppDispatch, useAppSelector } from ".";
-import { RequestType, requestService, RequestParams } from "../services/RequestService";
+import { localhostApi } from "../services/localhostApi";
 
 export interface AuthorizationState {
     data: AuthorizationData,
@@ -33,78 +31,37 @@ export const defaultAuthorizationState: AuthorizationState = {
     error: ''
 }
 
-const request = requestService.createThunk('authorization');
+const extendedApiSlice = localhostApi.injectEndpoints({
+    endpoints: builder => ({
+        getCurrentUser: builder.query<AuthorizationData, null>({
+            query: () => `Authorization/getCurrentUser`,
+            providesTags: ['Authorization'],
+        }),
+        login: builder.mutation<AuthorizationData, { userName: string, password: string }>({
+            query: ({ userName, password }) => ({
+                url: `Authorization/login`,
+                method: 'POST',
+                body: { userName, password },
+            }),
+            invalidatesTags: ['Authorization'],
+        }),
+        register: builder.mutation<AuthorizationData, { userName: string, password: string, passwordConfirm: string }>({
+            query: ({ userName, password, passwordConfirm }) => ({
+                url: `Authorization/register`,
+                method: 'POST',
+                body: { userName, password, passwordConfirm },
+            }),
+            invalidatesTags: ['Authorization'],
+        }),
+        logout: builder.mutation<AuthorizationData, null>({
+            query: () => ({
+                url: `Authorization/logout`,
+                method: 'POST'
+            }),
+            invalidatesTags: ['Authorization'],
+        }),
+    })
+})
 
-export const authorizationSlice = createSlice({
-    name: 'authorization',
-    initialState: defaultAuthorizationState,
-    reducers: {
-        resetError(state) {
-            state.error = ''
-        }
-    },
-    extraReducers: {
-        [request.fulfilled.type]: (state, action: PayloadAction<AuthorizationData>) => {
-            state.data = action.payload
-            state.isChecked = true,
-                state.isLoading = false,
-                state.error = ''
-        },
-        [request.pending.type]: (state) => {
-            state.isChecked = true,
-                state.isLoading = true,
-                state.error = ''
-        },
-        [request.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isChecked = true,
-                state.isLoading = false,
-                state.error = action.payload
-        }
-    }
-});
-
-const getCurrentUser = async (dispatch: AppDispatch) => {
-    const state = useAppSelector(state => state.authorizationReducer);
-    if (state.isChecked)
-        return;
-
-    const requestParams: RequestParams = {
-        path: 'Authorization/getCurrentUser',
-        type: RequestType.Get,
-        data: {}
-    }
-    dispatch(request(requestParams));
-}
-
-const register = async (dispatch: AppDispatch,
-    userName: string, password: string, passwordConfirm: string) => {
-
-    const requestParams: RequestParams = {
-        path: 'Authorization/register',
-        type: RequestType.Post,
-        data: { userName, password, passwordConfirm }
-    }
-    await dispatch(request(requestParams));
-}
-
-const login = async (dispatch: AppDispatch, userName: string, password: string) => {
-    const requestParams: RequestParams = {
-        path: 'Authorization/login',
-        type: RequestType.Post,
-        data: { userName, password }
-    }
-    await dispatch(request(requestParams));
-}
-
-const logout = async (dispatch: AppDispatch) => {
-    const requestParams: RequestParams = {
-        path: 'Authorization/logout',
-        type: RequestType.Post,
-        data: {}
-    }
-    await dispatch(request(requestParams));
-}
-
-export const authorizationActionCreators = { register, login, logout, getCurrentUser };
-export const resetError = authorizationSlice.actions.resetError;
+export const { useGetCurrentUserQuery, useLoginMutation, useRegisterMutation, useLogoutMutation } = extendedApiSlice;
 

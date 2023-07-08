@@ -1,22 +1,22 @@
 import * as React from 'react';
-import { useAppDispatch, useAppSelector } from '../store';
-import { authorizationActionCreators } from '../store/Authorization';
+import { useLogoutMutation } from '../store/Authorization';
 import { useNavigate } from 'react-router';
+import ErrorField from '../elements/ErrorField';
 
 const Logout: React.FC = () => {
-    const state = useAppSelector(state => state.authorizationReducer);
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [logout, { data, isLoading, error }] = useLogoutMutation()
 
     React.useEffect(() => {
-        if (!state.data.isAuthorized)
+        if (data != null && !data.isAuthorized)
             navigate('/');
-        else if (!state.isLoading)
-            authorizationActionCreators.logout(dispatch)
+        if (data == null && !isLoading)
+            logout(null)
     });
 
     return (
         <div>
+            <ErrorField title='Ошибка авторизации' error={error} />
             <h1>Выход...</h1>
         </div>
     )

@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { Route, Routes } from 'react-router';
-import { useAppDispatch, useAppSelector } from './store';
-import { authorizationActionCreators } from './store/Authorization';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Counter from './components/Counter';
@@ -12,11 +10,6 @@ import Logout from './components/Logout';
 import LoginRegister from './components/LoginRegisterForm';
 
 export default () => {
-    const state = useAppSelector(state => state.authorizationReducer);
-    const dispatch = useAppDispatch();
-
-    authorizationActionCreators.getCurrentUser(dispatch);
-
     return (
         <Layout>
             <Routes>

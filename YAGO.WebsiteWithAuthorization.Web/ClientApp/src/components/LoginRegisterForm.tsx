@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../store';
-import { authorizationActionCreators } from '../store/Authorization';
 import { Avatar, Box, Button, CssBaseline, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useNavigate } from 'react-router';
+import { useLoginMutation, useRegisterMutation } from '../store/Authorization';
+import ErrorField from '../elements/ErrorField';
 
 interface ILoginRegisterProps {
     isLogin: boolean
@@ -29,35 +29,30 @@ const defaultLoginRegisterFormState: LoginRegisterFormState = {
 }
 
 const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
-    const state = useAppSelector(state => state.authorizationReducer);
-    const dispatch = useAppDispatch();
     const isLogin = props.isLogin;
     const name = isLogin ? 'Вход' : 'Регистрация';
     const [registerFormState, setRegisterFormState] = useState(defaultLoginRegisterFormState);
     const navigate = useNavigate();
 
+    const [method, { data, isLoading, error }] = isLogin
+        ? useLoginMutation()
+        : useRegisterMutation();
+
     React.useEffect(() => {
-        if (state.data.isAuthorized)
+        if (data?.isAuthorized)
             navigate('/');
     });
 
     const submit = (event: React.FormEvent<EventTarget>) => {
         event.preventDefault();
-        if (state.isLoading || !validateForm())
+        if (isLoading || !validateForm())
             return;
-        if (isLogin)
-            authorizationActionCreators.login(
-                dispatch,
-                registerFormState.login,
-                registerFormState.password
-            );
-        else
-            authorizationActionCreators.register(
-                dispatch,
-                registerFormState.login,
-                registerFormState.password,
-                registerFormState.passwordConfirm
-            );
+        const registerArgs = {
+            userName: registerFormState.login,
+            password: registerFormState.password,
+            passwordConfirm: registerFormState.passwordConfirm
+        }
+        method(registerArgs)
     }
 
     const validateForm = () => {
@@ -191,6 +186,7 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
 
     return (
         <div>
+            <ErrorField title='Ошибка авторизации' error={error} />
             <CssBaseline />
             <Box
                 sx={{
@@ -216,10 +212,10 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        disabled={state.isLoading}
+                        disabled={isLoading}
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        {state.isLoading
+                        {isLoading
                             ? 'Загрузка...'
                             : name}
                     </Button>

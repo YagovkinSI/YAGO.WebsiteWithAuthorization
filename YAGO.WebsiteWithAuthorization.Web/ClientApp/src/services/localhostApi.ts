@@ -5,5 +5,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const localhostApi = createApi({
     reducerPath: 'localhostApi',
     baseQuery: fetchBaseQuery({ baseUrl: '' }),
+    tagTypes: ['Authorization'],
     endpoints: () => ({})
 });

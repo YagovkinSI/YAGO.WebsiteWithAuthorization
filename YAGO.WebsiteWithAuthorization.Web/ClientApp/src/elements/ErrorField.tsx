@@ -1,25 +1,25 @@
 import * as React from 'react';
-import { useAppDispatch, useAppSelector } from '../store';
 import { Alert, AlertTitle } from '@mui/material';
-import { resetError } from '../store/Authorization';
 
-const ErrorField: React.FC = () => {
-    const state = useAppSelector(state => state.authorizationReducer);
-    const dispatch = useAppDispatch()
+interface ErrorFieldProps {
+    title: string,
+    error: any
+}
 
+const ErrorField: React.FC<ErrorFieldProps> = (props) => {
     const emptyComponent = () => {
         return (<></>)
     }
 
     const alertComponent = () => {
         return (
-            <Alert severity="error" onClose={() => { dispatch(resetError()) }} sx={{ mt: '1rem' }}>
-                <AlertTitle>Ошибка авторизации</AlertTitle>
-                {state.error}
+            <Alert severity="error" sx={{ mt: '1rem' }}>
+                <AlertTitle>{props.title}</AlertTitle>
+                {props.error?.data}
             </Alert >)
     }
 
-    if (state.error == '') {
+    if (props.error == null) {
         return emptyComponent();
     } else {
         return alertComponent();

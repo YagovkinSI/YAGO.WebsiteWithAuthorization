@@ -3,7 +3,7 @@ import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Too
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../store';
+import { useGetCurrentUserQuery } from '../store/Authorization';
 
 interface Link {
     name: string,
@@ -26,7 +26,7 @@ const guestProfileLinks: Link[] = [
 ];
 
 const NavMenu: React.FC = () => {
-    const state = useAppSelector(state => state.authorizationReducer);
+    const { data } = useGetCurrentUserQuery(null);
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -170,14 +170,14 @@ const NavMenu: React.FC = () => {
     }
 
     const renderLoginMenu = () => {
-        const userMenuLinks = state.data.isAuthorized
+        const userMenuLinks = data?.isAuthorized
             ? userProfileLinks
             : guestProfileLinks;
         return (<Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    {state.data.isAuthorized && state.data.user?.name != null
-                        ? <Avatar {...stringAvatar(state.data.user.name)} />
+                    {data?.isAuthorized && data?.user?.name != null
+                        ? <Avatar {...stringAvatar(data?.user.name)} />
                         :
                         <Avatar>
                             <PersonIcon />
