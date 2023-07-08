@@ -38,7 +38,11 @@ const request = requestService.createThunk('authorization');
 export const authorizationSlice = createSlice({
     name: 'authorization',
     initialState: defaultAuthorizationState,
-    reducers: {},
+    reducers: {
+        resetError(state) {
+            state.error = ''
+        }
+    },
     extraReducers: {
         [request.fulfilled.type]: (state, action: PayloadAction<AuthorizationData>) => {
             state.data = action.payload
@@ -102,5 +106,5 @@ const logout = async (dispatch: AppDispatch) => {
 }
 
 export const authorizationActionCreators = { register, login, logout, getCurrentUser };
-
+export const resetError = authorizationSlice.actions.resetError;
 
