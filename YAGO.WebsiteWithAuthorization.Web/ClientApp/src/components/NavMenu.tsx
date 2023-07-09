@@ -26,7 +26,7 @@ const guestProfileLinks: Link[] = [
 ];
 
 const NavMenu: React.FC = () => {
-    const { data } = useGetCurrentUserQuery(null);
+    const { data } = useGetCurrentUserQuery()
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);

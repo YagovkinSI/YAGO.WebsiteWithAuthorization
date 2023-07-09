@@ -11,7 +11,7 @@ const Logout: React.FC = () => {
         if (data != null && !data.isAuthorized)
             navigate('/');
         if (data == null && !isLoading)
-            logout(null)
+            logout()
     });
 
     return (
