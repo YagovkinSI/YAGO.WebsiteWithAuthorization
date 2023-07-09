@@ -15,7 +15,7 @@ const ErrorField: React.FC<ErrorFieldProps> = (props) => {
         return (
             <Alert severity="error" sx={{ mt: '1rem' }}>
                 <AlertTitle>{props.title}</AlertTitle>
-                {props.error?.data}
+                {props.error?.data ?? 'Неизвестная ошибка'}
             </Alert >)
     }
 
