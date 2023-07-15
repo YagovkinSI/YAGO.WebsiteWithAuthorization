@@ -150,11 +150,8 @@ const NavMenu: React.FC = () => {
         };
     }
 
-    const renderLoginMenu = () => {
-        const userMenuLinks = data?.isAuthorized
-            ? userProfileLinks
-            : guestProfileLinks;
-        return (<Box sx={{ flexGrow: 0 }}>
+    const renderLoginMenuTooltip = () => {
+        return (
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     {data?.isAuthorized && data?.user?.name != null
@@ -166,32 +163,39 @@ const NavMenu: React.FC = () => {
                     }
                 </IconButton>
             </Tooltip>
-            <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-            >
-                {userMenuLinks.map((link) => (
-                    <MenuItem key={link.name} onClick={() => { onLinkClick(link.path); handleCloseUserMenu() }}>
-                        <Typography textAlign="center">{link.name}</Typography>
-                    </MenuItem>
-                ))}
-            </Menu>
-        </Box>
         )
     }
 
+    const renderLoginMenuLinks = () => {
+        const userMenuLinks = data?.isAuthorized
+            ? userProfileLinks
+            : guestProfileLinks;
+        return userMenuLinks.map((link) => (
+            <MenuItem key={link.name} onClick={() => { onLinkClick(link.path); handleCloseUserMenu() }}>
+                <Typography textAlign="center">{link.name}</Typography>
+            </MenuItem>
+        ))
+    }
+
+    const renderLoginMenu = () => {
+        return (
+            <Box sx={{ flexGrow: 0 }}>
+                {renderLoginMenuTooltip()}
+                <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    keepMounted
+                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                >
+                    {renderLoginMenuLinks()}
+                </Menu>
+            </Box>
+        )
+    }
     return render();
 }
 
