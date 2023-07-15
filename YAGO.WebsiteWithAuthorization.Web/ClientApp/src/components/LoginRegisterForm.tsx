@@ -1,40 +1,28 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { Avatar, Box, Button, CssBaseline, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useNavigate } from 'react-router';
 import { useLoginMutation, useRegisterMutation } from '../store/Authorization';
 import ErrorField from '../elements/ErrorField';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 interface ILoginRegisterProps {
     isLogin: boolean
 }
 
 interface LoginRegisterFormState {
-    login: string,
+    userName: string,
     password: string,
     passwordConfirm: string,
-    loginError: string,
-    passwordError: string,
-    passwordConfirmError: string,
-}
-
-const defaultLoginRegisterFormState: LoginRegisterFormState = {
-    login: '',
-    password: '',
-    passwordConfirm: '',
-    loginError: '',
-    passwordError: '',
-    passwordConfirmError: '',
 }
 
 const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
     const isLogin = props.isLogin;
     const name = isLogin ? 'Вход' : 'Регистрация';
-    const [registerFormState, setRegisterFormState] = useState(defaultLoginRegisterFormState);
     const navigate = useNavigate();
 
-    const [method, { data, isLoading, error }] = isLogin
+    const [useMutation, { data, isLoading, error }] = isLogin
         ? useLoginMutation()
         : useRegisterMutation();
 
@@ -43,70 +31,36 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
             navigate('/');
     });
 
-    const submit = (event: React.FormEvent<EventTarget>) => {
-        event.preventDefault();
-        if (isLoading || !validateForm())
-            return;
-        const registerArgs = {
-            userName: registerFormState.login,
-            password: registerFormState.password,
-            passwordConfirm: registerFormState.passwordConfirm
-        }
-        method(registerArgs)
-    }
+    const validationSchema = Yup.object().shape({
+        userName: Yup.string()
+            .required('Введите логин')
+            .min(4, 'Логин должен содержать не менее 4 символов')
+            .max(12, 'Логин должен содержать не более 12 символов')
+            .matches(/^[a-zA-Z0-9]+$/, 'Логин может содержать только латинские буквы и цифры'),
+        password: Yup.string()
+            .required('Введите пароль')
+            .min(6, 'Пароль должен содержать не менее 6 символов')
+            .matches(/[a-z]/, 'Пароль должен содержать строчную латинскую букву')
+            .matches(/[A-Z]/, 'Пароль должен содержать заглавную латинскую букву')
+            .matches(/[0-9]/, 'Пароль должен содержать цифру'),
+        passwordConfirm: isLogin 
+            ? Yup.string()
+            : Yup.string()
+                .required('Введите пароль ещё раз')
+                .oneOf([Yup.ref('password'), ''], 'Пароли не совпадают'),
+    })
 
-    const validateForm = () => {
-        let success = validateLogin() &&
-            validatePassword() &&
-            (isLogin || validatePasswordConfirm());
-        return success;
-    }
-
-    const validateLogin = () => {
-        let error = '';
-        if (registerFormState.login === '')
-            error = 'Введите логин';
-        else if (registerFormState.login.length < 4)
-            error = 'Логин должен содержать не менее 4 символов';
-        else if (registerFormState.login.length > 12)
-            error = 'Логин должен содержать не более 12 символов';
-        else if (!registerFormState.login.match(/^[a-zA-Z0-9]+$/))
-            error = 'Логин может содержать только латинские буквы и цифры';
-        else
-            return true;
-        setRegisterFormState({ ...registerFormState, loginError: error })
-        return false;
-    }
-
-    const validatePassword = () => {
-        let error = '';
-        if (registerFormState.password === '')
-            error = 'Введите пароль';
-        else if (registerFormState.password.length < 6)
-            error = 'Пароль должен содержать не менее 6 символов';
-        else if (!registerFormState.password.match(/[a-z]/))
-            error = 'Пароль должен содержать строчную латинскую букву';
-        else if (!registerFormState.password.match(/[A-Z]/))
-            error = 'Пароль должен содержать заглавную латинскую букву';
-        else if (!registerFormState.password.match(/[0-9]/))
-            error = 'Пароль должен содержать цифру';
-        else
-            return true;
-        setRegisterFormState({ ...registerFormState, passwordError: error })
-        return false;
-    }
-
-    const validatePasswordConfirm = () => {
-        if (registerFormState.passwordError === '' &&
-            registerFormState.passwordConfirm !== registerFormState.password)
-            setRegisterFormState({
-                ...registerFormState,
-                passwordConfirmError: 'Введенные пароли не совпадают'
-            })
-        else
-            return true;
-        return false;
-    }
+    const formik = useFormik({
+        initialValues: {
+            userName: '',
+            password: '',
+            passwordConfirm: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values: LoginRegisterFormState) => {
+            useMutation(values)
+        },
+    });
 
     const loginInput = () => {
         return (
@@ -119,16 +73,12 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
                 name="userName"
                 autoComplete="userName"
                 autoFocus
-                value={registerFormState.login}
-                onChange={e => {
-                    setRegisterFormState({
-                        ...registerFormState,
-                        login: e.target.value,
-                        loginError: ''
-                    });
-                }}
-                error={registerFormState.loginError !== ''}
-                helperText={registerFormState.loginError}
+                value={formik.values.userName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.userName && Boolean(formik.errors.userName)}
+                helperText={formik.touched.userName && formik.errors.userName}
+      
             />
         )
     }
@@ -144,17 +94,11 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={registerFormState.password}
-                onChange={e => {
-                    setRegisterFormState({
-                        ...registerFormState,
-                        password: e.target.value,
-                        passwordError: '',
-                        passwordConfirmError: ''
-                    });
-                }}
-                error={registerFormState.passwordError !== ''}
-                helperText={registerFormState.passwordError}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
             />
         )
     }
@@ -165,22 +109,38 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="passwordConfirm"
                 label="Повторите пароль"
                 type="password"
-                id="password"
+                id="passwordConfirm"
                 autoComplete="current-password"
-                value={registerFormState.passwordConfirm}
-                onChange={e => {
-                    setRegisterFormState({
-                        ...registerFormState,
-                        passwordConfirm: e.target.value,
-                        passwordConfirmError: ''
-                    });
-                }}
-                error={registerFormState.passwordConfirmError !== ''}
-                helperText={registerFormState.passwordConfirmError}
+                value={formik.values.passwordConfirm}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.passwordConfirm && Boolean(formik.errors.passwordConfirm)}
+                helperText={formik.touched.passwordConfirm && formik.errors.passwordConfirm}
             />
+        )
+    }
+
+    const renderForm = () => {
+        return (
+            <form onSubmit={formik.handleSubmit}>
+                {loginInput()}
+                {passwordInput()}
+                {isLogin ? <></> : confirmPasswordInput()}
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    disabled={isLoading}
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    {isLoading
+                        ? 'Загрузка...'
+                        : name}
+                </Button>
+            </form>
         )
     }
 
@@ -204,21 +164,8 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
                 <Typography component="h1" variant="h5">
                     {name}
                 </Typography>
-                <Box component="form" onSubmit={submit} noValidate sx={{ mt: 1 }}>
-                    {loginInput()}
-                    {passwordInput()}
-                    {isLogin ? <></> : confirmPasswordInput()}
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        disabled={isLoading}
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        {isLoading
-                            ? 'Загрузка...'
-                            : name}
-                    </Button>
+                <Box sx={{ mt: 1 }}>
+                    {renderForm()}
                 </Box>
             </Box>
         </div>
