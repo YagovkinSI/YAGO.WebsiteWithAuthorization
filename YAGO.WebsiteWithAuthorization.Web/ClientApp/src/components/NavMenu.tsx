@@ -1,15 +1,9 @@
 import * as React from 'react';
-import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
-import { useGetCurrentUserQuery } from '../store/Authorization';
-import getColorFromString from '../utils/ColorHelper';
-
-interface Link {
-    name: string,
-    path: string
-}
+import LoginIconMenu from './LoginIconMenu';
+import { Link } from '../models/Link';
 
 const links: Link[] = [
     { name: 'Главная', path: '/' },
@@ -17,29 +11,10 @@ const links: Link[] = [
     { name: 'Получение данных', path: '/fetch-data' },
 ];
 
-const userProfileLinks: Link[] = [
-    { name: 'Выход', path: '/logout' },
-];
-
-const guestProfileLinks: Link[] = [
-    { name: 'Вход', path: '/login' },
-    { name: 'Регистрация', path: '/register' },
-];
-
 const NavMenu: React.FC = () => {
-    const { data } = useGetCurrentUserQuery()
-
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const theme = useTheme();
     const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
 
     const render = () => {
         return (
@@ -49,7 +24,7 @@ const NavMenu: React.FC = () => {
                         {renderMenuIcon()}
                         {renderLogo()}
                         {renderLinks()}
-                        {renderLoginMenu()}
+                        <LoginIconMenu />
                     </Toolbar>
                 </Container>
             </AppBar >
@@ -141,61 +116,6 @@ const NavMenu: React.FC = () => {
         </Box>
     }
 
-    function stringAvatar(name: string) {
-        return {
-            sx: {
-                bgcolor: getColorFromString(name),
-            },
-            children: `${name[0]}`,
-        };
-    }
-
-    const renderLoginMenuTooltip = () => {
-        return (
-            <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    {data?.isAuthorized && data?.user?.name != null
-                        ? <Avatar {...stringAvatar(data?.user.name)} />
-                        :
-                        <Avatar>
-                            <PersonIcon />
-                        </Avatar>
-                    }
-                </IconButton>
-            </Tooltip>
-        )
-    }
-
-    const renderLoginMenuLinks = () => {
-        const userMenuLinks = data?.isAuthorized
-            ? userProfileLinks
-            : guestProfileLinks;
-        return userMenuLinks.map((link) => (
-            <MenuItem key={link.name} onClick={() => { onLinkClick(link.path); handleCloseUserMenu() }}>
-                <Typography textAlign="center">{link.name}</Typography>
-            </MenuItem>
-        ))
-    }
-
-    const renderLoginMenu = () => {
-        return (
-            <Box sx={{ flexGrow: 0 }}>
-                {renderLoginMenuTooltip()}
-                <Menu
-                    sx={{ mt: '45px' }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    keepMounted
-                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                >
-                    {renderLoginMenuLinks()}
-                </Menu>
-            </Box>
-        )
-    }
     return render();
 }
 
