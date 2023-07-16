@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
-import { WeatherForecast, useWeatherForecastsQuery } from '../store/WeatherForecasts';
+import { WeatherForecast, useWeatherForecastsQuery } from '../../store/WeatherForecasts';
 import AppTable, { AppTableColumn, AppTableRow } from '../elements/AppTable';
 
 const FetchData: React.FC = () => {

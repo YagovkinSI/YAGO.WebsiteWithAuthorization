@@ -2,11 +2,8 @@ import * as React from 'react';
 import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-
-interface Link {
-    name: string,
-    path: string
-}
+import LoginIconMenu from './LoginIconMenu';
+import { Link } from '../../models/Link';
 
 const links: Link[] = [
     { name: 'Главная', path: '/' },
@@ -27,6 +24,7 @@ const NavMenu: React.FC = () => {
                         {renderMenuIcon()}
                         {renderLogo()}
                         {renderLinks()}
+                        <LoginIconMenu />
                     </Toolbar>
                 </Container>
             </AppBar >

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import NavMenu from './NavMenu';
+import NavMenu from './modules/NavMenu';
 
 export interface LayoutProps {
     children?: React.ReactNode;
