@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Route, Routes } from 'react-router';
 import Layout from './components/Layout';
-import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
+import Home from './components/pages/Home';
+import Counter from './components/pages/Counter';
+import FetchData from './components/pages/FetchData';
 
 import './custom.css'
-import Logout from './components/Logout';
-import LoginRegister from './components/LoginRegisterForm';
+import Logout from './components/pages/Logout';
+import LoginRegister from './components/pages/LoginRegisterForm';
 
 export default () => {
     return (

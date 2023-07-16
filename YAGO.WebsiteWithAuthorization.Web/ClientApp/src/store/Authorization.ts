@@ -33,10 +33,12 @@ export const defaultAuthorizationState: AuthorizationState = {
 
 const extendedApiSlice = localhostApi.injectEndpoints({
     endpoints: builder => ({
+
         getCurrentUser: builder.query<AuthorizationData, void>({
             query: () => `Authorization/getCurrentUser`,
             providesTags: ['Authorization'],
         }),
+
         login: builder.mutation<AuthorizationData, { userName: string, password: string }>({
             query: ({ userName, password }) => ({
                 url: `Authorization/login`,
@@ -45,6 +47,7 @@ const extendedApiSlice = localhostApi.injectEndpoints({
             }),
             invalidatesTags: ['Authorization'],
         }),
+
         register: builder.mutation<AuthorizationData, { userName: string, password: string, passwordConfirm: string }>({
             query: ({ userName, password, passwordConfirm }) => ({
                 url: `Authorization/register`,
@@ -53,6 +56,7 @@ const extendedApiSlice = localhostApi.injectEndpoints({
             }),
             invalidatesTags: ['Authorization'],
         }),
+
         logout: builder.mutation<AuthorizationData, void>({
             query: () => ({
                 url: `Authorization/logout`,
@@ -60,6 +64,7 @@ const extendedApiSlice = localhostApi.injectEndpoints({
             }),
             invalidatesTags: ['Authorization'],
         }),
+        
     })
 })
 

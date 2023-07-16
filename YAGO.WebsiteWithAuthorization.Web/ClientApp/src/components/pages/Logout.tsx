@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useLogoutMutation } from '../store/Authorization';
+import { useLogoutMutation } from '../../store/Authorization';
 import { useNavigate } from 'react-router';
 import ErrorField from '../elements/ErrorField';
 

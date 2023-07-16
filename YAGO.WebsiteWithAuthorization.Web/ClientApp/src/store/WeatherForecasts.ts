@@ -9,12 +9,13 @@ export interface WeatherForecast {
 
 const extendedApiSlice = localhostApi.injectEndpoints({
     endpoints: builder => ({
+
         weatherForecasts: builder.query<WeatherForecast[], number>({
             query: () => `weatherforecast`,
         })
+
     })
 })
-
 
 // Экспорт хуков (hook) для использования в функциональных компонентах (FC), 
 // которые автоматически генерируются на основе определенных конечных точек (endpoints)

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Avatar, Box, Button, CssBaseline, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useNavigate } from 'react-router';
-import { useLoginMutation, useRegisterMutation } from '../store/Authorization';
+import { useLoginMutation, useRegisterMutation } from '../../store/Authorization';
 import ErrorField from '../elements/ErrorField';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
