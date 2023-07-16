@@ -64,7 +64,7 @@ const extendedApiSlice = localhostApi.injectEndpoints({
             }),
             invalidatesTags: ['Authorization'],
         }),
-        
+
     })
 })
 

@@ -19,6 +19,4 @@ const extendedApiSlice = localhostApi.injectEndpoints({
 
 // Экспорт хуков (hook) для использования в функциональных компонентах (FC), 
 // которые автоматически генерируются на основе определенных конечных точек (endpoints)
-export const { useWeatherForecastsQuery } = extendedApiSlice 
-
-
+export const { useWeatherForecastsQuery } = extendedApiSlice

@@ -33,7 +33,7 @@ const ErrorField: React.FC<ErrorFieldProps> = (props) => {
                 console.log(e)
             }
             if (result != '')
-                return result 
+                return result
         }
         return 'Неизвестная ошибка'
     }

@@ -5,7 +5,7 @@ using YAGO.Services.WeatherForecasts.Models;
 
 namespace YAGO.Services.WeatherForecasts
 {
-    public class WeatherForecastService
+	public class WeatherForecastService
 	{
 		private static readonly string[] Summaries = new[]
 		{

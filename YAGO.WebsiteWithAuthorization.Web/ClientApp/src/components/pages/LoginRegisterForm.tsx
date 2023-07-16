@@ -43,7 +43,7 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
             .matches(/[a-z]/, 'Пароль должен содержать строчную латинскую букву')
             .matches(/[A-Z]/, 'Пароль должен содержать заглавную латинскую букву')
             .matches(/[0-9]/, 'Пароль должен содержать цифру'),
-        passwordConfirm: isLogin 
+        passwordConfirm: isLogin
             ? Yup.string()
             : Yup.string()
                 .required('Введите пароль ещё раз')
@@ -78,7 +78,7 @@ const LoginRegister: React.FC<ILoginRegisterProps> = (props) => {
                 onBlur={formik.handleBlur}
                 error={formik.touched.userName && Boolean(formik.errors.userName)}
                 helperText={formik.touched.userName && formik.errors.userName}
-      
+
             />
         )
     }
