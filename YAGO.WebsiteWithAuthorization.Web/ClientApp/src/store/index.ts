@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { localhostApi } from '../sevices/localhostApi';
+import { localhostApi } from '../services/localhostApi';
 import { counterReducer } from './Counter';
 
 // Всякий раз, когда отправляется (dispatched) действие (action), Redux будет обновлять каждое 
@@ -10,7 +10,7 @@ import { counterReducer } from './Counter';
 // reducer (reducer) работал с соответствующим типом свойства ApplicationState.
 const rootReducer = combineReducers({
     counter: counterReducer,
-    [localhostApi.reducerPath]: localhostApi.reducer,
+    [localhostApi.reducerPath]: localhostApi.reducer
 });
 
 export const setupStore = () => {
