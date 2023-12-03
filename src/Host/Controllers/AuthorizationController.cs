@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System;
 using YAGO.Service.Authorization.Models;
 using YAGO.Service.Authorization;
+using YAGO.WebsiteWithAuthorization.Domain.User;
 
 namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 {
@@ -24,7 +25,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 
 		[HttpGet]
 		[Route("getCurrentUser")]
-		public async Task<ActionResult<AuthorizationUser>> GetCurrentUser()
+		public async Task<ActionResult<User>> GetCurrentUser()
 		{
 			try
 			{
@@ -40,7 +41,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 
 		[HttpPost]
 		[Route("register")]
-		public async Task<ActionResult<AuthorizationUser>> Register(RegisterRequest request)
+		public async Task<ActionResult<User>> Register(RegisterRequest request)
 		{
 			try
 			{
@@ -63,7 +64,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 
 		[HttpPost]
 		[Route("login")]
-		public async Task<ActionResult<AuthorizationUser>> Login(LoginRequest request)
+		public async Task<ActionResult<User>> Login(LoginRequest request)
 		{
 			try
 			{
@@ -85,7 +86,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 
 		[HttpPost]
 		[Route("logout")]
-		public async Task<ActionResult<AuthorizationUser>> Logout()
+		public async Task<ActionResult<User>> Logout()
 		{
 			try
 			{

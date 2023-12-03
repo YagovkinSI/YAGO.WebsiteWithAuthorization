@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using YAGO.Database;
 using YAGO.Entities.Extensions;
-using YAGO.Entities.Models;
 using YAGO.Service.Authorization.Models;
 
 namespace YAGO.Service.Authorization
@@ -13,12 +12,12 @@ namespace YAGO.Service.Authorization
 	public class AuthorizationService
 	{
 		private readonly DatabaseContext _context;
-		private readonly UserManager<User> _userManager;
-		private readonly SignInManager<User> _signInManager;
+		private readonly UserManager<Entities.Models.User> _userManager;
+		private readonly SignInManager<Entities.Models.User> _signInManager;
 
 		public AuthorizationService(DatabaseContext context,
-			UserManager<User> userManager,
-			SignInManager<User> signInManager)
+			UserManager<Entities.Models.User> userManager,
+			SignInManager<Entities.Models.User> signInManager)
 		{
 			_context = context;
 			_userManager = userManager;
@@ -38,7 +37,7 @@ namespace YAGO.Service.Authorization
 
 		public async Task<AuthorizationData> RegisterAsync(RegisterRequest request)
 		{
-			var user = new User
+			var user = new Entities.Models.User
 			{
 				Email = string.Empty,
 				UserName = request.UserName,
@@ -99,13 +98,13 @@ namespace YAGO.Service.Authorization
 				IsAuthorized = user != null,
 				User = user == null
 				? null
-				: new AuthorizationUser
-				{
-					Id = user.Id,
-					Name = user.UserName,
-					Registration = user.Registration,
-					LastActivity = user.LastActivity
-				}
+				: new WebsiteWithAuthorization.Domain.User.User
+					(
+						user.Id,
+						user.UserName,
+						user.Registration,
+						user.LastActivity
+					)
 			};
 		}
 	}
