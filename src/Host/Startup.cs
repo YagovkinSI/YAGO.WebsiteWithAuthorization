@@ -10,9 +10,9 @@ using Microsoft.OpenApi.Models;
 using YAGO.Database;
 using YAGO.Entities.Models;
 using YAGO.Service.Authorization;
-using YAGO.Services.WeatherForecasts;
+using YAGO.WebsiteWithAuthorization.Application.WeatherForecastService;
 
-namespace YAGO.WebsiteWithAuthorization.Web
+namespace YAGO.WebsiteWithAuthorization.Host
 {
 	public class Startup
 	{
@@ -107,9 +107,7 @@ namespace YAGO.WebsiteWithAuthorization.Web
 		private static void ExceptionHandling(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
-			{
 				app.UseDeveloperExceptionPage();
-			}
 			else
 			{
 				app.UseExceptionHandler("/Error");

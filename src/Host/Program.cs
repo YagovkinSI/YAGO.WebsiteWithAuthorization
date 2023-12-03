@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace YAGO.WebsiteWithAuthorization.Web
+namespace YAGO.WebsiteWithAuthorization.Host
 {
 	public class Program
 	{
@@ -12,7 +12,8 @@ namespace YAGO.WebsiteWithAuthorization.Web
 
 		public static IHostBuilder CreateHostBuilder(string[] args)
 		{
-			return Host.CreateDefaultBuilder(args)
+			return Microsoft.Extensions.Hosting.Host
+				.CreateDefaultBuilder(args)
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
