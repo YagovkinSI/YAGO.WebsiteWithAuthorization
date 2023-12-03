@@ -3,22 +3,23 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using YAGO.Database;
-using YAGO.Entities.Extensions;
 using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
 using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Extensions;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 {
 	internal class IdentityService : IAuthorizationService
 	{
-		private readonly UserManager<Entities.Models.User> _userManager;
-		private readonly SignInManager<Entities.Models.User> _signInManager;
+		private readonly UserManager<User> _userManager;
+		private readonly SignInManager<User> _signInManager;
 		private readonly DatabaseContext _context;
 
 		public IdentityService(
-			UserManager<Entities.Models.User> userManager,
-			SignInManager<Entities.Models.User> signInManager,
+			UserManager<User> userManager,
+			SignInManager<User> signInManager,
 			DatabaseContext context)
 		{
 			_userManager = userManager;
@@ -39,7 +40,7 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 
 		public async Task<AuthorizationData> RegisterAsync(RegisterRequest request)
 		{
-			var user = new Entities.Models.User
+			var user = new User
 			{
 				Email = string.Empty,
 				UserName = request.UserName,

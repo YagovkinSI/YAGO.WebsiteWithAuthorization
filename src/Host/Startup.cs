@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using YAGO.Database;
-using YAGO.Entities.Models;
 using YAGO.WebsiteWithAuthorization.Application.WeatherForecastService;
 using YAGO.WebsiteWithAuthorization.Infrastructure;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Host
 {
@@ -26,9 +25,7 @@ namespace YAGO.WebsiteWithAuthorization.Host
 		// Этот метод вызывается средой выполнения. Используйте этот метод для добавления служб в контейнер.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddInfrastructure();
-
-			AddDbContext(services);
+			services.AddInfrastructure(Configuration);
 
 			AddIdentity(services);
 
@@ -39,15 +36,6 @@ namespace YAGO.WebsiteWithAuthorization.Host
 			AddSpaStaticFiles(services);
 
 			AddSwagger(services);
-		}
-
-		private void AddDbContext(IServiceCollection services)
-		{
-			services.AddDbContext<DatabaseContext>(options =>
-				options.UseSqlServer(
-					Configuration.GetConnectionString("DefaultConnection"),
-					b => b.MigrationsAssembly("YAGO.WebsiteWithAuthorization.Host")
-				));
 		}
 
 		private static void AddIdentity(IServiceCollection services)

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using YAGO.Database;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
 
 namespace YAGO.WebsiteWithAuthorization.Web.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+	[DbContext(typeof(DatabaseContext))]
     [Migration("20230701050538_Add_tables_of_Identity")]
     partial class Add_tables_of_Identity
     {

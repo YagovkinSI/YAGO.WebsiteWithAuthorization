@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using YAGO.Entities.Models;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
-namespace YAGO.Entities.Extensions
+namespace YAGO.WebsiteWithAuthorization.Infrastructure.Database.Extensions
 {
 	public static class UserExtensions
 	{

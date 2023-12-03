@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using YAGO.Database;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
 
 namespace YAGO.WebsiteWithAuthorization.Web.Migrations
 {
-    [DbContext(typeof(DatabaseContext))]
+	[DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

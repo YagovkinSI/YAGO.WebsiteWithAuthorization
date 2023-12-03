@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace YAGO.Entities.Models
+namespace YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models
 {
 	public class User : IdentityUser
 	{

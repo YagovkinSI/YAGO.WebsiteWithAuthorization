@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using YAGO.Entities.Models;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
-namespace YAGO.Database
+namespace YAGO.WebsiteWithAuthorization.Infrastructure.Database
 {
 	public class DatabaseContext : IdentityDbContext<User>
 	{
