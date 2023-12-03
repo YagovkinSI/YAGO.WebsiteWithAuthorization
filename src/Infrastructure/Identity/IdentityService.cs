@@ -10,7 +10,7 @@ using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 {
-	internal class IdentityService : IIdentityService
+	internal class IdentityService : IAuthorizationService
 	{
 		private readonly UserManager<Entities.Models.User> _userManager;
 		private readonly SignInManager<Entities.Models.User> _signInManager;

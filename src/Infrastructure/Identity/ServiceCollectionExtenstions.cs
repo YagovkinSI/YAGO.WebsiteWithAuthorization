@@ -7,7 +7,7 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 	{
 		public static IServiceCollection AddIdentity(this IServiceCollection services)
 		{
-			services.AddScoped<IIdentityService, IdentityService>();
+			services.AddScoped<IAuthorizationService, IdentityService>();
 
 			return services;
 		}

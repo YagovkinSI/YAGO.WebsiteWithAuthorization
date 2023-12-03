@@ -13,10 +13,10 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 	[ApiController]
 	public class AuthorizationController : ControllerBase
 	{
-		private readonly IIdentityService _identityService;
+		private readonly IAuthorizationService _identityService;
 		private readonly ILogger<AuthorizationController> _logger;
 
-		public AuthorizationController(IIdentityService identityService,
+		public AuthorizationController(IAuthorizationService identityService,
 			ILogger<AuthorizationController> logger)
 		{
 			_identityService = identityService;
