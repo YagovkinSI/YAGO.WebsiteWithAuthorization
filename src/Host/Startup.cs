@@ -44,7 +44,7 @@ namespace YAGO.WebsiteWithAuthorization.Web
 			services.AddDbContext<DatabaseContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection"),
-					b => b.MigrationsAssembly("YAGO.WebsiteWithAuthorization.Web")
+					b => b.MigrationsAssembly("YAGO.WebsiteWithAuthorization.Host")
 				));
 		}
 

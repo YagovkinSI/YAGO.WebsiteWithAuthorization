@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YAGO.Entities\YAGO.Entities.csproj" />
+    <ProjectReference Include="..\Application\YAGO.WebsiteWithAuthorization.Application.csproj" />
+    <ProjectReference Include="..\Domain\YAGO.WebsiteWithAuthorization.Domain.csproj" />
   </ItemGroup>
 
 </Project>

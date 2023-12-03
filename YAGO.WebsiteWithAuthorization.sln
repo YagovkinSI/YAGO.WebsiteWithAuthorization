@@ -3,20 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Web", "YAGO.WebsiteWithAuthorization.Web\YAGO.WebsiteWithAuthorization.Web.csproj", "{765946AF-9334-4930-888A-3D4BE51DD88C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C45E13E3-C862-4710-96DC-CD549E10A82C}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Services.WeatherForecasts", "YAGO.Services.WeatherForecasts\YAGO.Services.WeatherForecasts.csproj", "{22D66575-7675-49D4-98BB-8CDB8CE63184}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Entities", "YAGO.Entities\YAGO.Entities.csproj", "{E2503D26-57FB-41A0-A211-08F1C1EBFC89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Application", "src\Application\YAGO.WebsiteWithAuthorization.Application.csproj", "{278712E0-B3F7-4CD6-A6D9-14AD59856ACC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Database", "YAGO.Database\YAGO.Database.csproj", "{6382A5AE-A166-4840-8C00-FCFB61281411}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Domain", "src\Domain\YAGO.WebsiteWithAuthorization.Domain.csproj", "{1071530E-CC9A-48E4-AC2C-A09B8CCF4621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAGO.Service.Authorization", "YAGO.Service.Authorization\YAGO.Service.Authorization.csproj", "{03550785-8FCE-499B-BED6-A2539FEDFCE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Host", "src\Host\YAGO.WebsiteWithAuthorization.Host.csproj", "{4B61BE5B-A25A-4E58-94CF-8A9C17968CED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Infrastructure", "src\Infrastructure\YAGO.WebsiteWithAuthorization.Infrastructure.csproj", "{B4C84715-C653-4A46-928D-74DB137F8B15}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Service.Authorization", "src\YAGO.Service.Authorization\YAGO.Service.Authorization.csproj", "{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,29 +26,36 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{765946AF-9334-4930-888A-3D4BE51DD88C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{765946AF-9334-4930-888A-3D4BE51DD88C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{765946AF-9334-4930-888A-3D4BE51DD88C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{765946AF-9334-4930-888A-3D4BE51DD88C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22D66575-7675-49D4-98BB-8CDB8CE63184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22D66575-7675-49D4-98BB-8CDB8CE63184}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22D66575-7675-49D4-98BB-8CDB8CE63184}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22D66575-7675-49D4-98BB-8CDB8CE63184}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2503D26-57FB-41A0-A211-08F1C1EBFC89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6382A5AE-A166-4840-8C00-FCFB61281411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6382A5AE-A166-4840-8C00-FCFB61281411}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6382A5AE-A166-4840-8C00-FCFB61281411}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6382A5AE-A166-4840-8C00-FCFB61281411}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03550785-8FCE-499B-BED6-A2539FEDFCE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{278712E0-B3F7-4CD6-A6D9-14AD59856ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{278712E0-B3F7-4CD6-A6D9-14AD59856ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{278712E0-B3F7-4CD6-A6D9-14AD59856ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{278712E0-B3F7-4CD6-A6D9-14AD59856ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1071530E-CC9A-48E4-AC2C-A09B8CCF4621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1071530E-CC9A-48E4-AC2C-A09B8CCF4621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1071530E-CC9A-48E4-AC2C-A09B8CCF4621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1071530E-CC9A-48E4-AC2C-A09B8CCF4621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B61BE5B-A25A-4E58-94CF-8A9C17968CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B61BE5B-A25A-4E58-94CF-8A9C17968CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B61BE5B-A25A-4E58-94CF-8A9C17968CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B61BE5B-A25A-4E58-94CF-8A9C17968CED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C84715-C653-4A46-928D-74DB137F8B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C84715-C653-4A46-928D-74DB137F8B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C84715-C653-4A46-928D-74DB137F8B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C84715-C653-4A46-928D-74DB137F8B15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{278712E0-B3F7-4CD6-A6D9-14AD59856ACC} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
+		{1071530E-CC9A-48E4-AC2C-A09B8CCF4621} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
+		{4B61BE5B-A25A-4E58-94CF-8A9C17968CED} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
+		{B4C84715-C653-4A46-928D-74DB137F8B15} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
+		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09A2724A-BF78-4559-A595-B72B9B840A71}
