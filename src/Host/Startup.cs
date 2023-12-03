@@ -9,8 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using YAGO.Database;
 using YAGO.Entities.Models;
-using YAGO.Service.Authorization;
 using YAGO.WebsiteWithAuthorization.Application.WeatherForecastService;
+using YAGO.WebsiteWithAuthorization.Infrastructure;
 
 namespace YAGO.WebsiteWithAuthorization.Host
 {
@@ -26,6 +26,8 @@ namespace YAGO.WebsiteWithAuthorization.Host
 		// Этот метод вызывается средой выполнения. Используйте этот метод для добавления служб в контейнер.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddInfrastructure();
+
 			AddDbContext(services);
 
 			AddIdentity(services);
@@ -70,7 +72,6 @@ namespace YAGO.WebsiteWithAuthorization.Host
 
 		private static void AddAppServices(IServiceCollection services)
 		{
-			services.AddScoped<AuthorizationService>();
 			services.AddScoped<WeatherForecastService>();
 		}
 
@@ -107,7 +108,9 @@ namespace YAGO.WebsiteWithAuthorization.Host
 		private static void ExceptionHandling(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
+			{
 				app.UseDeveloperExceptionPage();
+			}
 			else
 			{
 				app.UseExceptionHandler("/Error");

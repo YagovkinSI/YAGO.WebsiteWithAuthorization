@@ -5,23 +5,25 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using YAGO.Database;
 using YAGO.Entities.Extensions;
-using YAGO.Service.Authorization.Models;
+using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
+using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
 
-namespace YAGO.Service.Authorization
+namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 {
-	public class AuthorizationService
+	internal class IdentityService : IIdentityService
 	{
-		private readonly DatabaseContext _context;
 		private readonly UserManager<Entities.Models.User> _userManager;
 		private readonly SignInManager<Entities.Models.User> _signInManager;
+		private readonly DatabaseContext _context;
 
-		public AuthorizationService(DatabaseContext context,
+		public IdentityService(
 			UserManager<Entities.Models.User> userManager,
-			SignInManager<Entities.Models.User> signInManager)
+			SignInManager<Entities.Models.User> signInManager,
+			DatabaseContext context)
 		{
-			_context = context;
 			_userManager = userManager;
 			_signInManager = signInManager;
+			_context = context;
 		}
 
 		public async Task<AuthorizationData> GetCurrentUser(ClaimsPrincipal claimsPrincipal)
@@ -98,7 +100,7 @@ namespace YAGO.Service.Authorization
 				IsAuthorized = user != null,
 				User = user == null
 				? null
-				: new WebsiteWithAuthorization.Domain.User.User
+				: new Domain.User.User
 					(
 						user.Id,
 						user.UserName,

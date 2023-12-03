@@ -1,6 +1,6 @@
 ﻿using YAGO.WebsiteWithAuthorization.Domain.User;
 
-namespace YAGO.Service.Authorization.Models
+namespace YAGO.WebsiteWithAuthorization.Application.Authorization.Models
 {
 	public class AuthorizationData
 	{

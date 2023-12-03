@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace YAGO.Service.Authorization.Models
+namespace YAGO.WebsiteWithAuthorization.Application.Authorization.Models
 {
 	public class LoginRequest
 	{

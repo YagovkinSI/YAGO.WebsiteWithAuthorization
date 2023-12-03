@@ -1,25 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
-using YAGO.Service.Authorization.Models;
-using YAGO.Service.Authorization;
+using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
+using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
 using YAGO.WebsiteWithAuthorization.Domain.User;
 
-namespace YAGO.WebsiteWithAuthorization.Web.Controllers
+namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 {
 	[Route("[controller]")]
 	[ApiController]
 	public class AuthorizationController : ControllerBase
 	{
-		private readonly AuthorizationService _authorizationService;
+		private readonly IIdentityService _identityService;
 		private readonly ILogger<AuthorizationController> _logger;
 
-		public AuthorizationController(AuthorizationService authorizationService,
+		public AuthorizationController(IIdentityService identityService,
 			ILogger<AuthorizationController> logger)
 		{
-			_authorizationService = authorizationService;
+			_identityService = identityService;
 			_logger = logger;
 		}
 
@@ -29,7 +29,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 		{
 			try
 			{
-				var userPrivate = await _authorizationService.GetCurrentUser(HttpContext.User);
+				var userPrivate = await _identityService.GetCurrentUser(HttpContext.User);
 				return Ok(userPrivate);
 			}
 			catch (Exception ex)
@@ -51,7 +51,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 					return BadRequest(string.Join(". ", stateErrors));
 				}
 
-				var userPrivate = await _authorizationService.RegisterAsync(request);
+				var userPrivate = await _identityService.RegisterAsync(request);
 				return Ok(userPrivate);
 			}
 			catch (Exception ex)
@@ -74,7 +74,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 					return BadRequest(string.Join(". ", stateErrors));
 				}
 
-				var userPrivate = await _authorizationService.LoginAsync(request);
+				var userPrivate = await _identityService.LoginAsync(request);
 				return Ok(userPrivate);
 			}
 			catch (Exception ex)
@@ -90,7 +90,7 @@ namespace YAGO.WebsiteWithAuthorization.Web.Controllers
 		{
 			try
 			{
-				await _authorizationService.LogoutAsync(HttpContext.User);
+				await _identityService.LogoutAsync(HttpContext.User);
 				return Ok(AuthorizationData.NotAuthorized);
 			}
 			catch (Exception ex)

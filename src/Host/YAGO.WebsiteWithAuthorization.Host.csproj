@@ -34,7 +34,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\YAGO.WebsiteWithAuthorization.Application.csproj" />
     <ProjectReference Include="..\Infrastructure\YAGO.WebsiteWithAuthorization.Infrastructure.csproj" />
-    <ProjectReference Include="..\YAGO.Service.Authorization\YAGO.Service.Authorization.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

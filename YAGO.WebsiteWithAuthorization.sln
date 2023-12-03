@@ -18,8 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorizati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.WebsiteWithAuthorization.Infrastructure", "src\Infrastructure\YAGO.WebsiteWithAuthorization.Infrastructure.csproj", "{B4C84715-C653-4A46-928D-74DB137F8B15}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YAGO.Service.Authorization", "src\YAGO.Service.Authorization\YAGO.Service.Authorization.csproj", "{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,10 +40,6 @@ Global
 		{B4C84715-C653-4A46-928D-74DB137F8B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4C84715-C653-4A46-928D-74DB137F8B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4C84715-C653-4A46-928D-74DB137F8B15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,7 +49,6 @@ Global
 		{1071530E-CC9A-48E4-AC2C-A09B8CCF4621} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
 		{4B61BE5B-A25A-4E58-94CF-8A9C17968CED} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
 		{B4C84715-C653-4A46-928D-74DB137F8B15} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
-		{EC84A8C5-8587-4FAF-A3FA-B645F24D2212} = {4D6620A9-BE58-41F1-A1F4-A2AEEAAB19DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09A2724A-BF78-4559-A595-B72B9B840A71}
