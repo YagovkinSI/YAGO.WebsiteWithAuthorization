@@ -3,15 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
 
-namespace YAGO.WebsiteWithAuthorization.Web.Migrations
+namespace YAGO.WebsiteWithAuthorization.Infrastructure.Database.Migrations
 {
 	[DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230701050538_Add_tables_of_Identity")]
+    partial class Add_tables_of_Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

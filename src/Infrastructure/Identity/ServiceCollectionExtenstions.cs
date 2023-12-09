@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
+using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 {
@@ -7,7 +10,17 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 	{
 		public static IServiceCollection AddIdentity(this IServiceCollection services)
 		{
-			services.AddScoped<IAuthorizationService, IdentityService>();
+			services
+				.AddIdentity<User, IdentityRole>(options =>
+				{
+					options.Password.RequireNonAlphanumeric = false;
+					options.User.AllowedUserNameCharacters =
+						"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+				})
+				.AddEntityFrameworkStores<DatabaseContext>();
+
+			services
+				.AddScoped<IAuthorizationService, IdentityService>();
 
 			return services;
 		}

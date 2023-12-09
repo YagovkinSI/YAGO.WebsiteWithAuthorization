@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,8 +8,6 @@ using Microsoft.OpenApi.Models;
 using YAGO.WebsiteWithAuthorization.Application.WeatherForecastService;
 using YAGO.WebsiteWithAuthorization.Host.Middlewares;
 using YAGO.WebsiteWithAuthorization.Infrastructure;
-using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
-using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Host
 {
@@ -28,8 +25,6 @@ namespace YAGO.WebsiteWithAuthorization.Host
 		{
 			services.AddInfrastructure(Configuration);
 
-			AddIdentity(services);
-
 			AddAppServices(services);
 
 			services.AddControllersWithViews();
@@ -37,17 +32,6 @@ namespace YAGO.WebsiteWithAuthorization.Host
 			AddSpaStaticFiles(services);
 
 			AddSwagger(services);
-		}
-
-		private static void AddIdentity(IServiceCollection services)
-		{
-			services.AddIdentity<User, IdentityRole>(options =>
-			{
-				options.Password.RequireNonAlphanumeric = false;
-				options.User.AllowedUserNameCharacters =
-					"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			})
-				.AddEntityFrameworkStores<DatabaseContext>();
 		}
 
 		private static void AddSpaStaticFiles(IServiceCollection services)

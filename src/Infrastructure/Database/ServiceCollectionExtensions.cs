@@ -12,8 +12,7 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Database
 		{
 			services.AddDbContext<DatabaseContext>(options =>
 				options.UseSqlServer(
-					configuration.GetConnectionString("DefaultConnection"),
-					b => b.MigrationsAssembly("YAGO.WebsiteWithAuthorization.Host")
+					configuration.GetConnectionString("DefaultConnection")
 				));
 
 			return services;

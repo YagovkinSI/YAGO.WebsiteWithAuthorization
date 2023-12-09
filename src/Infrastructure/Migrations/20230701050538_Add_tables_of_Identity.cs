@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace YAGO.WebsiteWithAuthorization.Web.Migrations
+namespace YAGO.WebsiteWithAuthorization.Infrastructure.Database.Migrations
 {
     public partial class Add_tables_of_Identity : Migration
     {
