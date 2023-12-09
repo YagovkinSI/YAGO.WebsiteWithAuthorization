@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -16,15 +18,23 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
 		private readonly DatabaseContext _context;
+		private readonly ILogger<IdentityService> _logger;
+
+		private readonly Dictionary<string, Domain.Exceptions.ApplicationException> KNOWN_IDENTITY_ERROR_CODES = new()
+		{
+			{ "DuplicateUserName", new Domain.Exceptions.ApplicationException("Ошибка регистрации. Такой логин уже занят.", 409) }
+		};
 
 		public IdentityService(
 			UserManager<User> userManager,
 			SignInManager<User> signInManager,
-			DatabaseContext context)
+			DatabaseContext context,
+			ILogger<IdentityService> logger)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_context = context;
+			_logger = logger;
 		}
 
 		public async Task<AuthorizationData> GetCurrentUser(ClaimsPrincipal claimsPrincipal)
@@ -50,7 +60,16 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 
 			var result = await _userManager.CreateAsync(user, request.Password);
 			if (!result.Succeeded)
-				throw new Exception(string.Join(". ", result.Errors.Select(e => e.Description)));
+			{
+				var error = result.Errors.FirstOrDefault(e => KNOWN_IDENTITY_ERROR_CODES.ContainsKey(e.Code));
+				if (error == null)
+				{
+					_logger.LogError($"Ошибка регистрации. {string.Join(" .", result.Errors.Select(e => $"{e.Code}: {e.Description}"))}");
+					throw new Domain.Exceptions.ApplicationException("Ошибка регистрации. Неизвестная ошибка.");
+				}
+
+				throw KNOWN_IDENTITY_ERROR_CODES[error.Code];
+			}
 
 			await _signInManager.SignInAsync(user, true);
 
@@ -61,7 +80,7 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 		{
 			var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
 			if (!result.Succeeded)
-				throw new Exception("Неверный логин или пароль");
+				throw new Domain.Exceptions.ApplicationException("Ошибка авторизации. Проверьте логин и пароль.");
 
 			var user = await _context.Users.FindByUserNameAsync(request.UserName);
 

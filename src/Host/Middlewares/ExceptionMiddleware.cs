@@ -23,12 +23,19 @@ namespace YAGO.WebsiteWithAuthorization.Host.Middlewares
 			{
 				await _next.Invoke(context);
 			}
+			catch (Domain.Exceptions.ApplicationException ex)
+			{
+				_logger.LogInformation(ex.Message, ex);
+				context.Response.StatusCode = ex.ErrorCode;
+				context.Response.ContentType = "application/json";
+				await context.Response.WriteAsync(ex.Message);
+			}
 			catch (Exception ex)
 			{
 				_logger.LogError(ex.Message, ex);
 				context.Response.StatusCode = 500;
 				context.Response.ContentType = "application/json";
-				await context.Response.WriteAsync(ex.Message);
+				await context.Response.WriteAsync("Неизвестная ошибка.");
 			}
 		}
 	}
