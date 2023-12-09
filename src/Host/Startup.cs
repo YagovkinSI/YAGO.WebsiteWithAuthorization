@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using YAGO.WebsiteWithAuthorization.Application.WeatherForecastService;
+using YAGO.WebsiteWithAuthorization.Host.Middlewares;
 using YAGO.WebsiteWithAuthorization.Infrastructure;
 using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
 using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
@@ -74,7 +75,7 @@ namespace YAGO.WebsiteWithAuthorization.Host
 		// Этот метод вызывается средой выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			ExceptionHandling(app, env);
+			app.UseMiddleware<ExceptionMiddleware>();
 
 			app.UseSwagger();
 			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "YAGO Website With Authorization v1"));
@@ -91,20 +92,6 @@ namespace YAGO.WebsiteWithAuthorization.Host
 			UseControllers(app);
 
 			UseSpa(app, env);
-		}
-
-		private static void ExceptionHandling(IApplicationBuilder app, IWebHostEnvironment env)
-		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Error");
-				// Значение HSTS по умолчанию — 30 дней. Вы можете изменить это для рабочих сценариев, см. https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
-			}
 		}
 
 		private static void UseControllers(IApplicationBuilder app)

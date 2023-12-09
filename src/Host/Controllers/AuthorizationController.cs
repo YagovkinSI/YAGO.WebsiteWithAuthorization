@@ -1,103 +1,63 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
 using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
-using YAGO.WebsiteWithAuthorization.Domain.User;
 
 namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 {
-	[Route("[controller]")]
 	[ApiController]
+	[Route("[controller]")]
 	public class AuthorizationController : ControllerBase
 	{
 		private readonly IAuthorizationService _identityService;
-		private readonly ILogger<AuthorizationController> _logger;
 
-		public AuthorizationController(IAuthorizationService identityService,
-			ILogger<AuthorizationController> logger)
+		public AuthorizationController(IAuthorizationService identityService)
 		{
 			_identityService = identityService;
-			_logger = logger;
 		}
 
 		[HttpGet]
 		[Route("getCurrentUser")]
-		public async Task<ActionResult<User>> GetCurrentUser()
+		public Task<AuthorizationData> GetCurrentUser()
 		{
-			try
-			{
-				var userPrivate = await _identityService.GetCurrentUser(HttpContext.User);
-				return Ok(userPrivate);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex.Message, ex);
-				return StatusCode(500, ex.Message);
-			}
+			return _identityService.GetCurrentUser(HttpContext.User);
 		}
 
 		[HttpPost]
 		[Route("register")]
-		public async Task<ActionResult<User>> Register(RegisterRequest request)
+		public Task<AuthorizationData> Register(RegisterRequest request)
 		{
-			try
+			if (!ModelState.IsValid)
 			{
-				if (!ModelState.IsValid)
-				{
-					var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
-					return BadRequest(string.Join(". ", stateErrors));
-				}
+				var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
+				throw new BadHttpRequestException(string.Join(". ", stateErrors));
+			}
 
-				var userPrivate = await _identityService.RegisterAsync(request);
-				return Ok(userPrivate);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex.Message, ex);
-				return StatusCode(500, ex.Message);
-			}
+			return _identityService.RegisterAsync(request);
 		}
 
 
 		[HttpPost]
 		[Route("login")]
-		public async Task<ActionResult<User>> Login(LoginRequest request)
+		public Task<AuthorizationData> Login(LoginRequest request)
 		{
-			try
+			if (!ModelState.IsValid)
 			{
-				if (!ModelState.IsValid)
-				{
-					var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
-					return BadRequest(string.Join(". ", stateErrors));
-				}
+				var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
+				throw new BadHttpRequestException(string.Join(". ", stateErrors));
+			}
 
-				var userPrivate = await _identityService.LoginAsync(request);
-				return Ok(userPrivate);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex.Message, ex);
-				return StatusCode(500, ex.Message);
-			}
+			return _identityService.LoginAsync(request);
 		}
 
 		[HttpPost]
 		[Route("logout")]
-		public async Task<ActionResult<User>> Logout()
+		public async Task<AuthorizationData> Logout()
 		{
-			try
-			{
-				await _identityService.LogoutAsync(HttpContext.User);
-				return Ok(AuthorizationData.NotAuthorized);
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex.Message, ex);
-				return StatusCode(500, ex.Message);
-			}
+			await _identityService.LogoutAsync(HttpContext.User);
+			return AuthorizationData.NotAuthorized;
 		}
 	}
 }
