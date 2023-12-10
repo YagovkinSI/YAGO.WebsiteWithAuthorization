@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useLogoutMutation } from '../../store/Authorization';
+import { useLogoutMutation } from '../features/Authorization';
 import { useNavigate } from 'react-router';
-import ErrorField from '../elements/ErrorField';
+import ErrorField from '../shared/ErrorField';
 
 const Logout: React.FC = () => {
     const navigate = useNavigate();
