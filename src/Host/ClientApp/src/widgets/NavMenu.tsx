@@ -3,7 +3,7 @@ import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Ty
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 import LoginIconMenu from '../features/LoginIconMenu';
-import { Link } from '../entities/Link';
+import { Link } from '../shared/Link';
 
 const links: Link[] = [
     { name: 'Главная', path: '/' },

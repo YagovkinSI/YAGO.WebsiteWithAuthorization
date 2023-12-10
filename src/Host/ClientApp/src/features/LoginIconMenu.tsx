@@ -3,7 +3,7 @@ import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@m
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 import getColorFromString from '../shared/ColorHelper';
-import { Link } from '../entities/Link';
+import { Link } from '../shared/Link';
 import { useGetCurrentUserQuery } from '../entities/CurrentUser';
 
 const userProfileLinks: Link[] = [
