@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
 using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
@@ -20,43 +21,49 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 
 		[HttpGet]
 		[Route("getCurrentUser")]
-		public Task<AuthorizationData> GetCurrentUser()
+		public Task<AuthorizationData> GetCurrentUser(CancellationToken cancellationToken)
 		{
-			return _identityService.GetCurrentUser(HttpContext.User);
+			cancellationToken.ThrowIfCancellationRequested();
+			return _identityService.GetCurrentUser(HttpContext.User, cancellationToken);
 		}
 
 		[HttpPost]
 		[Route("register")]
-		public Task<AuthorizationData> Register(RegisterRequest request)
+		public Task<AuthorizationData> Register(RegisterRequest request, CancellationToken cancellationToken)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			if (!ModelState.IsValid)
 			{
 				var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
 				throw new BadHttpRequestException(string.Join(". ", stateErrors));
 			}
 
-			return _identityService.RegisterAsync(request);
+			cancellationToken.ThrowIfCancellationRequested();
+			return _identityService.RegisterAsync(request, cancellationToken);
 		}
 
 
 		[HttpPost]
 		[Route("login")]
-		public Task<AuthorizationData> Login(LoginRequest request)
+		public Task<AuthorizationData> Login(LoginRequest request, CancellationToken cancellationToken)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			if (!ModelState.IsValid)
 			{
 				var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
 				throw new BadHttpRequestException(string.Join(". ", stateErrors));
 			}
 
-			return _identityService.LoginAsync(request);
+			cancellationToken.ThrowIfCancellationRequested();
+			return _identityService.LoginAsync(request, cancellationToken);
 		}
 
 		[HttpPost]
 		[Route("logout")]
-		public async Task<AuthorizationData> Logout()
+		public async Task<AuthorizationData> Logout(CancellationToken cancellationToken)
 		{
-			await _identityService.LogoutAsync(HttpContext.User);
+			cancellationToken.ThrowIfCancellationRequested();
+			await _identityService.LogoutAsync(HttpContext.User, cancellationToken);
 			return AuthorizationData.NotAuthorized;
 		}
 	}

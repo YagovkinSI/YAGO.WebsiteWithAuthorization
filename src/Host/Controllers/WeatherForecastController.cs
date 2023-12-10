@@ -24,9 +24,7 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 		public async Task<IEnumerable<WeatherForecastApi>> Get(CancellationToken cancellationToken)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-
 			var weatherForecasts = await _weatherForecastService.GetWeatherForecastList(cancellationToken);
-
 			return weatherForecasts
 				.Select(w => ToApi(w));
 		}

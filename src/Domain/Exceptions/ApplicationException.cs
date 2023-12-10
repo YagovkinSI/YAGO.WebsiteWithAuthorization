@@ -2,6 +2,9 @@
 
 namespace YAGO.WebsiteWithAuthorization.Domain.Exceptions
 {
+	/// <summary>
+	/// Ошибка приложения
+	/// </summary>
 	public class ApplicationException : Exception
 	{
 		public ApplicationException(string message, int errorCode = 500)
@@ -10,6 +13,9 @@ namespace YAGO.WebsiteWithAuthorization.Domain.Exceptions
 			ErrorCode = errorCode;
 		}
 
+		/// <summary>
+		/// Код ошибки (HTTP)
+		/// </summary>
 		public int ErrorCode { get; }
 	}
 }

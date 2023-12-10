@@ -20,7 +20,7 @@ namespace YAGO.WebsiteWithAuthorization.Application.WeatherForecastService
 		/// <summary>
 		/// Получение прогноза погоды на пять дней
 		/// </summary>
-		/// <param name="cancellationToken">ТОкен отмены</param>
+		/// <param name="cancellationToken">Токен отмены</param>
 		/// <returns>Прогноз погоды на пять дней</returns>
 		public Task<IEnumerable<WeatherForecast>> GetWeatherForecastList(CancellationToken cancellationToken)
 		{
