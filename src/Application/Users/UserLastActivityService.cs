@@ -6,6 +6,9 @@ using YAGO.WebsiteWithAuthorization.Domain.User;
 
 namespace YAGO.WebsiteWithAuthorization.Application.Users
 {
+	/// <summary>
+	/// Сервис обновления даты и времени последней активности пользователя
+	/// </summary>
 	public class UserLastActivityService
 	{
 		private readonly IUserDatabaseService _userDatabaseService;
@@ -15,6 +18,11 @@ namespace YAGO.WebsiteWithAuthorization.Application.Users
 			_userDatabaseService = userDatabaseService;
 		}
 
+		/// <summary>
+		/// Актуализация даты и времени последней активности пользователя
+		/// </summary>
+		/// <param name="user">Данные пользователя</param>
+		/// <param name="cancellationToken">ТОкен отмены</param>
 		public async Task UpdateUserLastActivity(User user, CancellationToken cancellationToken)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
