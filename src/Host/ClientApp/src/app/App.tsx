@@ -4,10 +4,10 @@ import Layout from './Layout';
 import Home from '../pages/Home';
 import Counter from '../pages/Counter';
 import FetchData from '../pages/FetchData';
-
-import './custom.css'
 import Logout from '../pages/Logout';
 import LoginRegister from '../pages/LoginRegisterForm';
+
+import './custom.css'
 
 export default () => {
     return (
