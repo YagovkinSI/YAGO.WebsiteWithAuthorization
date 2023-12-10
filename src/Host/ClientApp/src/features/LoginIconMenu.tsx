@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
-import { useGetCurrentUserQuery } from '../../store/Authorization';
-import getColorFromString from '../../utils/ColorHelper';
-import { Link } from '../../models/Link';
+import { useGetCurrentUserQuery } from './Authorization';
+import getColorFromString from '../shared/ColorHelper';
+import { Link } from '../entities/Link';
 
 const userProfileLinks: Link[] = [
     { name: 'Выход', path: '/logout' },

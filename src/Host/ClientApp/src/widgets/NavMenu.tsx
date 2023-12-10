@@ -2,8 +2,8 @@ import * as React from 'react';
 import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-import LoginIconMenu from './LoginIconMenu';
-import { Link } from '../../models/Link';
+import LoginIconMenu from '../features/LoginIconMenu';
+import { Link } from '../entities/Link';
 
 const links: Link[] = [
     { name: 'Главная', path: '/' },

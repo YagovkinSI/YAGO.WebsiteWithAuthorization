@@ -1,4 +1,4 @@
-import { localhostApi } from "../services/localhostApi";
+import { localhostApi } from "../shared/localhostApi";
 
 export interface WeatherForecast {
     date: string;
