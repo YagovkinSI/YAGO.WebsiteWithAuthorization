@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
+using YAGO.WebsiteWithAuthorization.Application.Users.Models;
 
-namespace YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces
+namespace YAGO.WebsiteWithAuthorization.Application.Users.Interfaces
 {
 	/// <summary>
 	/// Сервис авторизации пользователей

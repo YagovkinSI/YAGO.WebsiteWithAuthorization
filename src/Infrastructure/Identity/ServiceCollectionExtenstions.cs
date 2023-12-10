@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
+using YAGO.WebsiteWithAuthorization.Application.Users.Interfaces;
 using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
 using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 

@@ -6,10 +6,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
-using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
-using YAGO.WebsiteWithAuthorization.Infrastructure.Database;
-using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Extensions;
+using YAGO.WebsiteWithAuthorization.Application.Users.Interfaces;
+using YAGO.WebsiteWithAuthorization.Application.Users.Models;
 using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
@@ -18,7 +16,7 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly SignInManager<User> _signInManager;
-		private readonly DatabaseContext _context;
+		private readonly IUserDatabaseService _userDatabaseService;
 		private readonly ILogger<IdentityService> _logger;
 
 		private readonly Dictionary<string, Domain.Exceptions.ApplicationException> KNOWN_IDENTITY_ERROR_CODES = new()
@@ -29,12 +27,12 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 		public IdentityService(
 			UserManager<User> userManager,
 			SignInManager<User> signInManager,
-			DatabaseContext context,
+			IUserDatabaseService userDatabaseService,
 			ILogger<IdentityService> logger)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
-			_context = context;
+			_userDatabaseService = userDatabaseService;
 			_logger = logger;
 		}
 
@@ -42,14 +40,7 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 		{
 			cancellationToken.ThrowIfCancellationRequested();
 			var user = await _userManager.GetUserAsync(claimsPrincipal);
-			if (user == null)
-				return AuthorizationData.NotAuthorized;
-
-			cancellationToken.ThrowIfCancellationRequested();
-			await UpdateUserLastActivity(user.Id, cancellationToken);
-
-			cancellationToken.ThrowIfCancellationRequested();
-			return await GetAuthorizationDataAsync(_context, user.Id);
+			return ToAuthorizationData(user);
 		}
 
 		public async Task<AuthorizationData> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken)
@@ -68,9 +59,7 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 			if (!result.Succeeded)
 				throw GetRegisterExeption(result.Errors);
 			await _signInManager.SignInAsync(user, true);
-
-			cancellationToken.ThrowIfCancellationRequested();
-			return await GetAuthorizationDataAsync(_context, user.Id);
+			return ToAuthorizationData(user);
 		}
 
 		public async Task<AuthorizationData> LoginAsync(LoginRequest request, CancellationToken cancellationToken)
@@ -81,13 +70,10 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 				throw new Domain.Exceptions.ApplicationException("Ошибка авторизации. Проверьте логин и пароль.");
 
 			cancellationToken.ThrowIfCancellationRequested();
-			var user = await _context.Users.FindByUserNameAsync(request.UserName);
+			var user = await _userDatabaseService.FindByUserName(request.UserName, cancellationToken);
 
 			cancellationToken.ThrowIfCancellationRequested();
-			await UpdateUserLastActivity(user.Id, cancellationToken);
-
-			cancellationToken.ThrowIfCancellationRequested();
-			return await GetAuthorizationDataAsync(_context, user.Id);
+			return GetAuthorizationDataAsync(user);
 		}
 
 		public async Task LogoutAsync(ClaimsPrincipal claimsPrincipal, CancellationToken cancellationToken)
@@ -98,43 +84,34 @@ namespace YAGO.WebsiteWithAuthorization.Infrastructure.Identity
 				return;
 
 			cancellationToken.ThrowIfCancellationRequested();
-			await UpdateUserLastActivity(user.Id, cancellationToken);
-
-			cancellationToken.ThrowIfCancellationRequested();
 			await _signInManager.SignOutAsync();
 		}
 
-		private async Task UpdateUserLastActivity(string userId, CancellationToken cancellationToken)
+		private static AuthorizationData ToAuthorizationData(User user)
 		{
-			cancellationToken.ThrowIfCancellationRequested();
-			var user = _context.Users.Find(userId);
 			if (user == null)
-				return;
+				return AuthorizationData.NotAuthorized;
 
-			cancellationToken.ThrowIfCancellationRequested();
-			user.LastActivity = DateTimeOffset.Now;
-			_context.Update(user);
+			var domainUser = new Domain.User.User
+			(
+				user.Id,
+				user.UserName,
+				user.Registration,
+				user.LastActivity
+			);
 
-			cancellationToken.ThrowIfCancellationRequested();
-			await _context.SaveChangesAsync();
+			return GetAuthorizationDataAsync(domainUser);
 		}
 
-		private static async Task<AuthorizationData> GetAuthorizationDataAsync(DatabaseContext context, string userId)
+		private static AuthorizationData GetAuthorizationDataAsync(Domain.User.User user)
 		{
-			var user = await context.Users.FindAsync(userId);
-			return new AuthorizationData
-			{
-				IsAuthorized = user != null,
-				User = user == null
-				? null
-				: new Domain.User.User
-					(
-						user.Id,
-						user.UserName,
-						user.Registration,
-						user.LastActivity
-					)
-			};
+			return user == null
+				? AuthorizationData.NotAuthorized
+				: new AuthorizationData
+				{
+					IsAuthorized = true,
+					User = user
+				};
 		}
 
 		private Exception GetRegisterExeption(IEnumerable<IdentityError> errors)

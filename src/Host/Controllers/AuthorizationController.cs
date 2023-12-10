@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using YAGO.WebsiteWithAuthorization.Application.Authorization.Interfaces;
-using YAGO.WebsiteWithAuthorization.Application.Authorization.Models;
+using YAGO.WebsiteWithAuthorization.Application.Users;
+using YAGO.WebsiteWithAuthorization.Application.Users.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 {
@@ -12,11 +12,11 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 	[Route("[controller]")]
 	public class AuthorizationController : ControllerBase
 	{
-		private readonly IAuthorizationService _identityService;
+		private readonly UserAuthorizationService _userAuthorizationService;
 
-		public AuthorizationController(IAuthorizationService identityService)
+		public AuthorizationController(UserAuthorizationService userAuthorizationService)
 		{
-			_identityService = identityService;
+			_userAuthorizationService = userAuthorizationService;
 		}
 
 		[HttpGet]
@@ -24,7 +24,7 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 		public Task<AuthorizationData> GetCurrentUser(CancellationToken cancellationToken)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-			return _identityService.GetCurrentUser(HttpContext.User, cancellationToken);
+			return _userAuthorizationService.GetCurrentUser(HttpContext.User, cancellationToken);
 		}
 
 		[HttpPost]
@@ -39,7 +39,7 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 			}
 
 			cancellationToken.ThrowIfCancellationRequested();
-			return _identityService.RegisterAsync(request, cancellationToken);
+			return _userAuthorizationService.RegisterAsync(request, cancellationToken);
 		}
 
 
@@ -55,7 +55,7 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 			}
 
 			cancellationToken.ThrowIfCancellationRequested();
-			return _identityService.LoginAsync(request, cancellationToken);
+			return _userAuthorizationService.LoginAsync(request, cancellationToken);
 		}
 
 		[HttpPost]
@@ -63,7 +63,7 @@ namespace YAGO.WebsiteWithAuthorization.Host.Controllers
 		public async Task<AuthorizationData> Logout(CancellationToken cancellationToken)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
-			await _identityService.LogoutAsync(HttpContext.User, cancellationToken);
+			await _userAuthorizationService.LogoutAsync(HttpContext.User, cancellationToken);
 			return AuthorizationData.NotAuthorized;
 		}
 	}

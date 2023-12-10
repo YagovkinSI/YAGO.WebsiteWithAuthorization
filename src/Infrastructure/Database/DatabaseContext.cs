@@ -4,7 +4,7 @@ using YAGO.WebsiteWithAuthorization.Infrastructure.Database.Models;
 
 namespace YAGO.WebsiteWithAuthorization.Infrastructure.Database
 {
-	public class DatabaseContext : IdentityDbContext<User>
+	public partial class DatabaseContext : IdentityDbContext<User>
 	{
 		public DatabaseContext(DbContextOptions<DatabaseContext> options)
 			   : base(options)

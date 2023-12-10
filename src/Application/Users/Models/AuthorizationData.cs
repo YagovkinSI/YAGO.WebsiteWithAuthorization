@@ -1,6 +1,6 @@
 ﻿using YAGO.WebsiteWithAuthorization.Domain.User;
 
-namespace YAGO.WebsiteWithAuthorization.Application.Authorization.Models
+namespace YAGO.WebsiteWithAuthorization.Application.Users.Models
 {
 	/// <summary>
 	/// Данные авторизации

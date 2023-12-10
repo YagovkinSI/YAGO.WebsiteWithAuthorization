@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace YAGO.WebsiteWithAuthorization.Application.Authorization.Models
+namespace YAGO.WebsiteWithAuthorization.Application.Users.Models
 {
 	/// <summary>
 	/// Запрос регистрации
