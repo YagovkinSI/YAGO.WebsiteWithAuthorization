@@ -1,0 +1,59 @@
+{
+  "name": "yago.websitewithauthorization.web",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.3",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.4",
+    "@reduxjs/toolkit": "^1.9.5",
+    "formik": "^2.4.2",
+    "jquery": "~3.7.0",
+    "merge": "2.1.1",
+    "popper.js": "^1.16.1",
+    "react": "~18.2.0",
+    "react-dom": "~18.2.0",
+    "react-redux": "~8.0.7",
+    "react-router": "~6.12.1",
+    "react-router-dom": "~6.12.1",
+    "redux": "4.2.1",
+    "redux-thunk": "2.4.2",
+    "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.2",
+    "@types/node": "20.3.0",
+    "@types/react": "~18.2.11",
+    "@types/react-dom": "~18.2.4",
+    "@types/react-redux": "~7.1.25",
+    "@types/react-router": "~5.1.20",
+    "@types/react-router-dom": "~5.3.3",
+    "cross-env": "7.0.3",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "nan": "^2.17.0",
+    "react-scripts": "^5.0.1",
+    "typescript": "4.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "resolutions": {
+    "url-parse": ">=1.5.0",
+    "lodash": ">=4.17.21"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
