@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { counterActionIncrement } from '../../store/Counter';
+import { useAppDispatch, useAppSelector } from '../appStore';
+import { counterActionIncrement } from '../features/Counter';
 
 const Counter: React.FC = () => {
     const state = useAppSelector(state => state.counter)

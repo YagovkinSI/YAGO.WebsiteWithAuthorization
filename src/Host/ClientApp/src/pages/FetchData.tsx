@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
-import { WeatherForecast, useWeatherForecastsQuery } from '../../store/WeatherForecasts';
-import AppTable, { AppTableColumn, AppTableRow } from '../elements/AppTable';
+import { WeatherForecast, useWeatherForecastsQuery } from '../features/WeatherForecasts';
+import AppTable, { AppTableColumn, AppTableRow } from '../shared/AppTable';
 
 const FetchData: React.FC = () => {
   // получаем значение startDateIndex из текущего URL-адреса, согласно пути маршрута (route).

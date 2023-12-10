@@ -1,43 +1,8 @@
-import { localhostApi } from "../services/localhostApi";
-
-export interface AuthorizationState {
-    data: AuthorizationData,
-    isLoading: boolean,
-    isChecked: boolean,
-    error: string
-}
-
-export interface AuthorizationData {
-    isAuthorized: boolean
-    user: AuthorizationUser | undefined
-}
-
-export interface AuthorizationUser {
-    id: string
-    name: string
-    registration: string
-    lastActivity: string
-}
-
-const defaultAuthorizationData: AuthorizationData = {
-    isAuthorized: false,
-    user: undefined
-}
-
-export const defaultAuthorizationState: AuthorizationState = {
-    data: defaultAuthorizationData,
-    isLoading: false,
-    isChecked: false,
-    error: ''
-}
+import { AuthorizationData } from "../entities/CurrentUser";
+import { localhostApi } from "../shared/localhostApi";
 
 const extendedApiSlice = localhostApi.injectEndpoints({
     endpoints: builder => ({
-
-        getCurrentUser: builder.query<AuthorizationData, void>({
-            query: () => `Authorization/getCurrentUser`,
-            providesTags: ['Authorization'],
-        }),
 
         login: builder.mutation<AuthorizationData, { userName: string, password: string }>({
             query: ({ userName, password }) => ({
@@ -68,5 +33,5 @@ const extendedApiSlice = localhostApi.injectEndpoints({
     })
 })
 
-export const { useGetCurrentUserQuery, useLoginMutation, useRegisterMutation, useLogoutMutation } = extendedApiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = extendedApiSlice;
 
